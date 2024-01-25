@@ -1,0 +1,33 @@
+DAILY SCRUM - EVERY DAY AT 8:30AM
+==========================================================
+1. What I have done / not done since last Scrum?
+2. What I plan to do from this scrum to next? (next 24 hours)
+3. Where do I need assistance? What do I need to figure out?
+
+Jan 25 Sophie
+1. Done / not done since last scrum:
+- Setting up Git for client and server
+- gather info for preposal
+2. To do until next Scrum:
+- research google sign-in libraries
+3. Need assistance / figure things out
+- feedback on proposal
+
+Jan 25 Nicholas
+1. Done / not done since last scrum:
+- Created use case diagram
+- Created and authorized Heroku account
+2. To do until next Scrum:
+- Setup Heroku app with necessary addons (ClearDB)
+3.
+- Clarify with Greg that database will be hosted in Heroku
+
+Jan 25 Benjamin
+1. Done / Not done since last scrum:
+- Database design
+- trello board
+2. To do until next scrum
+- research media player
+- research JWT security / enviroment file
+3. Need assistance
+- proposal feeback
