@@ -31,3 +31,34 @@ Jan 25 Benjamin
 - research JWT security / enviroment file
 3. Need assistance
 - proposal feeback
+
+Jan 25 Sophie - afternoon
+1. Done / not done since last scrum:
+- finalized proposal
+2. To do until next Scrum:
+- start with registration
+3. Need assistance / figure things out
+- research google sign-in libraries
+
+Jan 25 Nicholas - afternoon
+1. Done / not done since last scrum:
+- set up database amazon RDS
+- create server and client on heroku
+2. To do until next Scrum:
+- Setup amazon S3
+3. Need assistance
+- 
+
+Jan 25 Benjamin - afternoon
+1. Done / Not done since last scrum:
+- Researched Media player library
+- not done, JWT/enviroment file security
+2. To do until next scrum
+- Start react app, and server node files
+- home page
+- add songs
+- users can manage their accounts
+3. Need assistance
+- research soundstripe and other site designs
+- research JWT enviroment key pairing
+- whats up with workmembers and boardmembers on trello?
