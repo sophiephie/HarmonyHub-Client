@@ -56,7 +56,7 @@ button {
 .card {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   height: fit-content;
   min-height: 220px;
   border: 2px solid wheat;
