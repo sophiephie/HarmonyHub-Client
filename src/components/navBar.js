@@ -5,6 +5,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import Home from "../pages/home";
 import SignUpPage from "../pages/signup";
 import Dashboard from "../pages/userDash";
+import EmailLoginForm from "./loginForm";
 import axios from "axios";
 
 const NavBar = () => {
@@ -16,8 +17,7 @@ const NavBar = () => {
     // Check if a valid JWT token is present in local storage and set if user is logged in
     const jwtToken = localStorage.getItem("jwtToken");
 
-    if (jwtToken != "undefined" && jwtToken) {
-      console.log(jwtToken);
+    if (jwtToken !== "undefined" && jwtToken) {
       setIsLoggedIn(!!jwtToken);
     }
   }, []);
@@ -57,6 +57,7 @@ const NavBar = () => {
           // Redirect to the sign-up page if the user does not exist
           navigate("/signup");
         }
+        setShowDropdown(false);
       } else {
         console.log("Error happened");
       }
@@ -129,6 +130,18 @@ const NavBar = () => {
                 )}
                 {showDropdown && (
                   <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow-lg">
+                    <EmailLoginForm
+                      onLoginSuccess={(newUser) => {
+                        if (newUser) {
+                          setShowDropdown(false);
+                          navigate("/signup");
+                        } else {
+                          setIsLoggedIn(true);
+                          navigate(0);
+                        }
+                      }}
+                    />
+                    <hr className="w-full border-t border-gray-300 mt-4 mb-4" />
                     <GoogleLogin
                       onSuccess={handleGoogleLoginSuccess}
                       onError={handleGoogleLoginError}
