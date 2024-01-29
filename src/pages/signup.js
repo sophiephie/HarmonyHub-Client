@@ -25,6 +25,11 @@ const SignUpPage = () => {
       );
 
       if (response && response.data) {
+        // Store JWT token and display name in local storage
+        const jwtToken = response.data.token;
+        localStorage.setItem("jwtToken", jwtToken);
+        localStorage.setItem("displayName", response.data.displayName);
+        localStorage.setItem("email", response.data.email);
         // Handle successful sign-up and navigate back to home
         navigate("/");
       } else {
