@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 import React, { useState } from "react";
 import { Route, Routes, Link, useNavigate, Router } from "react-router-dom";
+=======
+import React, { useState, useEffect } from "react";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
+>>>>>>> Stashed changes
 import Logo from "./assets/logo-no-background.png";
 import { GoogleLogin } from "@react-oauth/google";
 import Home from "./pages/home";
@@ -9,21 +14,26 @@ import axios from "axios";
 
 const NavBar = () => {
   const navigate = useNavigate();
-
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if a valid JWT token is present in local storage and set if user is logged in
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    if (jwtToken != 'undefined' && jwtToken) {
+      console.log(jwtToken);
+      setIsLoggedIn(!!jwtToken);
+    }
+  }, []);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const displayWelcomeMessage = (displayName) => {
-    alert(`Welcome Back ${displayName}`);
-  };
-
   const handleGoogleLoginSuccess = async (credentialResponse) => {
-    console.log(credentialResponse);
     try {
-      // Send the token to server for verification
+      // Send the token to the server for verification
       const response = await axios.post(
         "http://localhost:3001/api/users/google-login",
         {
@@ -38,21 +48,19 @@ const NavBar = () => {
       );
 
       if (response && response.data) {
-        // Set token returned from server
-        console.log(response);
         const newUser = response.data.newUser;
         const jwtToken = response.data.token;
 
         // Store JWT token and display name in local storage
         localStorage.setItem("jwtToken", jwtToken);
         localStorage.setItem("displayName", response.data.displayName);
+        localStorage.setItem("email", response.data.email);
+
+        setIsLoggedIn(true);
 
         if (newUser) {
-          // Redirect to sign up page if user does not exist
-
+          // Redirect to the sign-up page if the user does not exist
           navigate("/signup");
-        } else {
-          displayWelcomeMessage(response.data.displayName);
         }
       } else {
         console.log("Error happened");
@@ -64,6 +72,18 @@ const NavBar = () => {
 
   const handleGoogleLoginError = () => {
     console.log("Login Failed");
+  };
+
+  const handleLogout = () => {
+    // Clear the JWT token and user-related data from local storage
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("displayName");
+    localStorage.removeItem("email");
+
+    setIsLoggedIn(false);
+
+    // Redirect to the home page or any other page after logout
+    navigate("/");
   };
 
   return (
@@ -90,17 +110,28 @@ const NavBar = () => {
                   <Link to="/dashboard">Dashboard</Link>
                 </div>
               </div>
+              {/* Show log out button if the user is logged in, otherwise show login button */}
               <div className="w-150">
-                <button
-                  type="button"
-                  className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 bg-blue-300"
-                  id="menu-button"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                  onClick={toggleDropdown}
-                >
-                  Login/Create an Account
-                </button>
+                {isLoggedIn ? (
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 bg-blue-300"
+                    >
+                    Sign out
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 bg-blue-300"
+                    id="menu-button"
+                    aria-expanded="true"
+                    aria-haspopup="true"
+                    onClick={toggleDropdown}
+                  >
+                    Login/Create an Account
+                  </button>
+                )}
                 {showDropdown && (
                   <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow-lg">
                     <GoogleLogin

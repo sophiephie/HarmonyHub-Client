@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignUpPage = () => {
@@ -6,6 +7,9 @@ const SignUpPage = () => {
     localStorage.getItem("displayName")
   );
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSignUp = async () => {
     try {
@@ -15,17 +19,21 @@ const SignUpPage = () => {
         {
           displayName,
           username,
+          email,
+          password,
         }
       );
 
       if (response && response.data) {
-        // Handle successful sign-up, e.g., show a success message
-        console.log(response.data);
+        // Handle successful sign-up and navigate back to home
+        navigate("/");
       } else {
-        console.log("Error happened during sign-up");
+        console.log("Error happened during creation");
+        alert("Error during creation...");
       }
     } catch (error) {
-      console.error("Error during sign-up:", error);
+      console.error("Error during user sign up:", error);
+      alert(error.response.data.error);
     }
   };
 
@@ -35,6 +43,22 @@ const SignUpPage = () => {
         <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
         <div className="mb-4">
           <label
+            htmlFor="Email"
+            className="block text-sm font-medium text-gray-600"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
+          />
+        </div>
+        <div className="mb-4">
+          <label
             htmlFor="displayName"
             className="block text-sm font-medium text-gray-600"
           >
@@ -42,8 +66,8 @@ const SignUpPage = () => {
           </label>
           <input
             type="text"
-            id="username"
-            name="username"
+            id="displayName"
+            name="displayName"
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
             className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
@@ -62,6 +86,22 @@ const SignUpPage = () => {
             name="username"
             onChange={(e) => setUsername(e.target.value)}
             value={username}
+            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-600"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
             className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
           />
         </div>
