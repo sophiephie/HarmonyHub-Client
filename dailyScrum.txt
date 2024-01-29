@@ -93,3 +93,36 @@ Jan 26 Benjamin
 - Work on home page / nav bar
 - Start implementing user account management
 3. Need assistance
+
+Jan 29 Sophie
+1. Done / not done since last scrum:
+- Advanced the login with Google function 
+    - Existing users get redirected to home page
+    - Non existing users get redirected to registration which asks them to choose username
+- Adjusted nav bar
+2. To do until next Scrum:
+- Finish login with Google function
+- Implement registration with email (non Google sign-in)
+3. Need assistance / figure things out
+- Connecting Google Auth to the backend
+
+Jan 29 Nicholas
+1. Done / not done since last scrum:
+- Fixed sophies database connection issues
+- Created functions to get,put and delete objects(files) from Amazon S3
+- Pushed git repos to Heroku and launched apps
+2. To do until next Scrum:
+- Implement user management functions for admin
+3. Need assistance / figure things out
+
+Jan 29 Benjamin
+1. Done / Not done since last scrum:
+- Adjusted nav bar
+- Adjusted home page
+- Started user account management (user dashboard)
+2. To do until next scrum
+- Finish user account management (user dashboard)
+3. Need assistance / figure things out
+- Stuck on implementing JWTs
+- Stuck on implementing routes
+
