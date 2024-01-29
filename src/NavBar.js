@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
-import React, { useState } from "react";
-import { Route, Routes, Link, useNavigate, Router } from "react-router-dom";
-=======
 import React, { useState, useEffect } from "react";
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
->>>>>>> Stashed changes
 import Logo from "./assets/logo-no-background.png";
 import { GoogleLogin } from "@react-oauth/google";
 import Home from "./pages/home";
@@ -21,7 +16,7 @@ const NavBar = () => {
     // Check if a valid JWT token is present in local storage and set if user is logged in
     const jwtToken = localStorage.getItem("jwtToken");
 
-    if (jwtToken != 'undefined' && jwtToken) {
+    if (jwtToken != "undefined" && jwtToken) {
       console.log(jwtToken);
       setIsLoggedIn(!!jwtToken);
     }
@@ -117,7 +112,7 @@ const NavBar = () => {
                     type="button"
                     onClick={handleLogout}
                     className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 bg-blue-300"
-                    >
+                  >
                     Sign out
                   </button>
                 ) : (
