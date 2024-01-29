@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Routes, Link, useNavigate } from "react-router-dom";
+import { Route, Routes, Link, useNavigate, Router } from "react-router-dom";
 import Logo from "./assets/logo-no-background.png";
 import { GoogleLogin } from "@react-oauth/google";
 import Home from "./pages/home";
@@ -87,10 +87,7 @@ const NavBar = () => {
                   <Link to="/">Genre</Link>
                 </div>
                 <div className="text-white ml-20">
-                  <Link to="/">Dashboard</Link>
-                </div>
-                <div>
-                  <Link to="/dashboard"></Link>
+                  <Link to="/dashboard">Dashboard</Link>
                 </div>
               </div>
               <div className="w-150">

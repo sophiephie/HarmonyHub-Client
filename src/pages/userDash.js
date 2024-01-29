@@ -7,10 +7,18 @@ function Dashboard() {
   const [songList, setSongList] = useState([]);
   //GET userId from db with ??? auth from JWT ???
   //authorize and get user info
+  const [showPassChange, setShowPassChange] = useState(false);
+  const togglePassChange = () => {
+    setShowPassChange(!showPassChange);
+  };
+  const [updateInfo, setUpdateInfo] = useState(false);
+  const toggleUpdateInfo = () => {
+    setUpdateInfo(!updateInfo);
+  };
   useEffect(() => {
     try {
       axios
-        .get("http://localhost:3001/users/????GET????")
+        .get("http://localhost:3001/users/dashboard")
         //pass header? for userId?
         .then((response) => {
           if (response.data.error) {
@@ -24,7 +32,7 @@ function Dashboard() {
     }
     try {
       axios
-        .get("http://localhost:3001/songs/??GET??")
+        .get("http://localhost:3001/songs/dashboard")
         //pass header? for userId?
         .then((response) => {
           if (response.data.error) {
@@ -48,12 +56,32 @@ function Dashboard() {
         {userInfo.map((value, key) => {
           return (
             <div>
-              <label>Username:</label>
-              <p>{value.username}</p>
-              <label>Displayname: </label>
-              <p>{value.displayName}</p>
-              <label>Email:</label>
-              <p>{value.email}</p>
+              {updateInfo ? (
+                <div> </div>
+              ) : (
+                <div>
+                  <label>Username:</label>
+                  <p>{value.username}</p>
+                  <label>Displayname: </label>
+                  <p>{value.displayName}</p>
+                  <label>Email:</label>
+                  <p>{value.email}</p>
+                  <button onClick={toggleUpdateInfo}>Update</button>
+                </div>
+              )}
+
+              {showPassChange ? (
+                <div>
+                  <label>Old password:</label>
+                  <input type="password" />
+                  <label>New password:</label>
+                  <input type="password" />
+                  <button type="submit">Change Password</button>
+                  <button onClick={togglePassChange}>Cancel</button>
+                </div>
+              ) : (
+                <button onClick={togglePassChange}>Change Password</button>
+              )}
             </div>
           );
         })}
