@@ -2,7 +2,7 @@ import "./App.css";
 import "./styles.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter as Router } from "react-router-dom";
-import NavBar from "./navBar.js";
+import NavBar from "./components/navBar";
 
 function App() {
   return (

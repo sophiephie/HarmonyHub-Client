@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
-import Logo from "./assets/logo-no-background.png";
+import Logo from "../assets/logo-no-background.png";
 import { GoogleLogin } from "@react-oauth/google";
 import Home from "../pages/home";
 import SignUpPage from "../pages/signup";

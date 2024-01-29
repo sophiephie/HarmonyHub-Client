@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 function Dashboard() {
   const [userInfo, setUserInfo] = useState([]);
   const [songList, setSongList] = useState([]);
-  //GET userId from db with ??? auth from JWT ???
-  //authorize and get user info
   const [showPassChange, setShowPassChange] = useState(false);
   const togglePassChange = () => {
     setShowPassChange(!showPassChange);
@@ -17,9 +15,11 @@ function Dashboard() {
   };
   useEffect(() => {
     try {
+      //GET user info
       axios
-        .get("http://localhost:3001/users/dashboard")
-        //pass header? for userId?
+        .get("http://localhost:3001/users/dashboard", {
+          headers: { jwtToken: localStorage.getItem("jwtToken") },
+        })
         .then((response) => {
           if (response.data.error) {
             console.log(response.data.error);
@@ -31,9 +31,11 @@ function Dashboard() {
       console.log(error);
     }
     try {
+      //GET song by userId
       axios
-        .get("http://localhost:3001/songs/dashboard")
-        //pass header? for userId?
+        .get("http://localhost:3001/songs/dashboard", {
+          headers: { jwtToken: localStorage.getItem("jwtToken") },
+        })
         .then((response) => {
           if (response.data.error) {
             console.log(response.data.error);
@@ -45,7 +47,6 @@ function Dashboard() {
       console.log(error);
     }
   }, []);
-  //GET all user songs
 
   return (
     <div className="outer">
@@ -57,7 +58,20 @@ function Dashboard() {
           return (
             <div>
               {updateInfo ? (
-                <div> </div>
+                <div>
+                  <label>Username:</label>
+                  <input type="text" name="username" />
+                  <label>Displayname:</label>
+                  <input type="text" name="displayname" />
+                  <label>Email:</label>
+                  <input type="text" name="email" />
+                  <label>Enter password:</label>
+                  <input type="password" name="password" />
+                  <button onClick={toggleUpdateInfo} type="submit">
+                    Update
+                  </button>
+                  <button onClick={toggleUpdateInfo}>Cancel</button>
+                </div>
               ) : (
                 <div>
                   <label>Username:</label>
@@ -107,6 +121,8 @@ function Dashboard() {
               <p>{value.year}</p>
               <label>Description:</label>
               <p>{value.description}</p>
+              <button>Update Song Info</button>
+              {/* link to song info update page? */}
             </div>
           );
         })}
