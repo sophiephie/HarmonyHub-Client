@@ -126,3 +126,32 @@ Jan 29 Benjamin
 - Stuck on implementing JWTs
 - Stuck on implementing routes
 
+Jan 30 Sophie
+1. Done / not done since last scrum:
+- Finished registration and login with email and Google
+2. To do until next Scrum:
+- Create song listing page
+- Continue search function
+3. Need assistance / figure things out
+
+Jan 30 Nicholas
+1. Done / not done since last scrum:
+- Not Done admin dashboard
+    - Manage Users
+    - Manage Playlists
+    - Manage Songs
+2. To do until next Scrum:
+- Complete admin dashboard
+    - write APIs for crud
+    - Implement authorization to admin routes
+3. Need assistance / figure things out
+
+Jan 30 Benjamin
+1. Done / Not done since last scrum:
+- Not done user dashboard
+2. To do until next scrum
+- Finish user dashboard
+- Start add songs function for users
+3. Need assistance / figure things out
+- Error 500 when trying to query the database
+
