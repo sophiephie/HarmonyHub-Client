@@ -60,7 +60,6 @@ function UsersTab() {
                             <p>Username: {user.username}</p>
                             <p>Display Name: {user.displayName}</p>
                             <p>Email: {user.email}</p>
-                            <p>Password: {user.password}</p>
                             <button onClick={() => handleEditClick(user)}>Edit</button>
                         </div>
                     ))}
@@ -86,11 +85,6 @@ function UsersTab() {
                         name="email"
                         onChange={editFormik.handleChange}
                         value={editFormik.values.email}
-                    /> <input
-                        type="text"
-                        name="password"
-                        onChange={editFormik.handleChange}
-                        value={""}
                     />
                     <button type="submit">Save</button>
                 </form>

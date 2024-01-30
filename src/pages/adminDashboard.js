@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Sidebar from './adminDashboardComponents/Sidebar';
-import UsersTab from './adminDashboardComponents/UsersTab';
-import SongsTab from './adminDashboardComponents/SongsTab';
-import PlaylistsTab from './adminDashboardComponents/PlaylistsTab';
+import Sidebar from '../components/adminDashboardComponents/Sidebar';
+import UsersTab from '../components/adminDashboardComponents/UsersTab';
+import SongsTab from '../components/adminDashboardComponents/SongsTab';
+import PlaylistsTab from '../components/adminDashboardComponents/PlaylistsTab';
 import '../App.css';
 
 function Dashboard() {

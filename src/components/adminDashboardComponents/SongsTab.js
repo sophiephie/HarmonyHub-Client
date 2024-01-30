@@ -51,6 +51,11 @@ function SongsTab() {
                     ))}
                 </div>
             )}
+            {searchResults.length === 0 && (
+                <div>
+                    <p>This User has not uploaded any songs</p>
+                </div>
+            )}
         </div>
     );
 }
