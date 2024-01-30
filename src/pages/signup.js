@@ -15,7 +15,7 @@ const SignUpPage = () => {
     try {
       // Send the sign-up data to the server
       const response = await axios.post(
-        "http://localhost:3001/api/users/signup",
+        "http://localhost:3001/users/signup",
         {
           displayName,
           username,
