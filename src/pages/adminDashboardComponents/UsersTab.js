@@ -4,6 +4,7 @@ import axios from 'axios';
 
 function UsersTab() {
     const [searchResults, setSearchResults] = useState([]);
+    const [editingUser, setEditingUser] = useState(null);
 
     const formik = useFormik({
         initialValues: {
@@ -11,7 +12,7 @@ function UsersTab() {
         },
         onSubmit: async (values) => {
             try {
-                const response = await axios.get(`/admin/search?query=${encodeURIComponent(values.searchQuery)}`);
+                const response = await axios.get(`http://localhost:3001/admin/users/${values.searchQuery}`);
                 setSearchResults(response.data);
                 console.log(response.data);
             } catch (error) {
@@ -20,6 +21,23 @@ function UsersTab() {
             }
         },
     });
+    const editFormik = useFormik({
+        initialValues: { username: '', displayName: '', email: '', password: '' },
+        onSubmit: async (values) => {
+            try {
+                await axios.post(`/admin/user/${values.username}`, values);
+                // Handle successful edit
+                setEditingUser(null); // Close the edit form
+            } catch (error) {
+                console.error('Error updating user:', error);
+            }
+        },
+    });
+
+    const handleEditClick = (user) => {
+        setEditingUser(user);
+        editFormik.setValues(user);
+    };
     return (
         <div>
             <p>Users management area</p>
@@ -43,9 +61,39 @@ function UsersTab() {
                             <p>Display Name: {user.displayName}</p>
                             <p>Email: {user.email}</p>
                             <p>Password: {user.password}</p>
+                            <button onClick={() => handleEditClick(user)}>Edit</button>
                         </div>
                     ))}
                 </div>
+            )}
+
+            {editingUser && (
+                <form onSubmit={editFormik.handleSubmit}>
+                    {/* Edit form fields */}
+                    <input
+                        type="text"
+                        name="username"
+                        onChange={editFormik.handleChange}
+                        value={editFormik.values.username}
+                    />
+                    <input
+                        type="text"
+                        name="displayName"
+                        onChange={editFormik.handleChange}
+                        value={editFormik.values.displayName}
+                    /> <input
+                        type="text"
+                        name="email"
+                        onChange={editFormik.handleChange}
+                        value={editFormik.values.email}
+                    /> <input
+                        type="text"
+                        name="password"
+                        onChange={editFormik.handleChange}
+                        value={""}
+                    />
+                    <button type="submit">Save</button>
+                </form>
             )}
         </div>
     );
