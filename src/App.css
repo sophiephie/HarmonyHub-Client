@@ -107,3 +107,42 @@ button {
 .navbar a:hover {
   color: lightblue;
 }
+
+/*  Admin Dashboard   */
+.adminDashboard {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar button {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.sidebar button:hover {
+  background-color: #555;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.tab {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
