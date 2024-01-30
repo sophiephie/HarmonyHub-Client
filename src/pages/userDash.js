@@ -22,7 +22,7 @@ function Dashboard() {
   };
 
   const infoValues = {
-    displayname: "",
+    displayName: "",
     email: "",
     password: "",
   };
@@ -37,7 +37,7 @@ function Dashboard() {
       ),
   });
   const infoValidation = Yup.object().shape({
-    displayname: Yup.string().max(45).required("Please enter display name"),
+    displayName: Yup.string().max(45).required("Please enter display name"),
     email: Yup.string().email("invaild email").required("Please enter email"),
     password: Yup.string().required("Please Enter your password."),
   });
@@ -86,22 +86,22 @@ function Dashboard() {
     } catch (error) {
       console.log(error);
     }
-    // try {
-    //   //GET song by userId
-    //   axios
-    //     .get("http://localhost:3001/songs/dashboard", {
-    //       headers: { jwtToken: localStorage.getItem("jwtToken") },
-    //     })
-    //     .then((response) => {
-    //       if (response.data.error) {
-    //         console.log(response.data.error);
-    //       } else {
-    //         setSongList(response.data);
-    //       }
-    //     });
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      //GET song by userId
+      axios
+        .get("http://localhost:3001/songs/dashboard", {
+          headers: { jwtToken: localStorage.getItem("jwtToken") },
+        })
+        .then((response) => {
+          if (response.data.error) {
+            console.log(response.data.error);
+          } else {
+            setSongList(response.data);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (
@@ -129,9 +129,9 @@ function Dashboard() {
                       <label>Email:</label>
                       <ErrorMessage name="email" component="span" />
                       <Field name="email" placeholder={value.email} />
-                      {/* add password verification <label>Enter password:</label>
+                      <label>Enter password:</label>
                       <ErrorMessage name="password" component="span" />
-                      <Field name="password" type="password" /> */}
+                      <Field name="password" type="password" />
                       <button type="submit">Update</button>
                       <button onClick={toggleUpdateForm}>Cancel</button>
                     </Form>
@@ -178,30 +178,31 @@ function Dashboard() {
       </div>
       <div className="card">
         <h2>Your Songs</h2>
-        {[songList].map((value, key) => {
-          return (
-            <div>
-              <label>Title:</label>
-              <p>{value.songTitle}</p>
-              <label>Song Data</label>
-              {/* button to change? */}
-              <label>Artowrk</label>
-              {/* display image and button to change? */}
-              <label>Artist: </label>
-              <p>{value.artistName}</p>
-              <label>Album:</label>
-              <p>{value.albumName}</p>
-              <label>Tags:</label>
-              <p>{value.tags}</p>
-              <label>Year:</label>
-              <p>{value.year}</p>
-              <label>Description:</label>
-              <p>{value.description}</p>
-              <button>Update Song Info</button>
-              {/* link to song info update page? */}
-            </div>
-          );
-        })}
+        {songList.length > 0 &&
+          [songList].map((value, key) => {
+            return (
+              <div>
+                <label>Title:</label>
+                <p>{value.songTitle}</p>
+                <label>Song Data</label>
+                {/* button to change? */}
+                <label>Artowrk</label>
+                {/* display image and button to change? */}
+                <label>Artist: </label>
+                <p>{value.artistName}</p>
+                <label>Album:</label>
+                <p>{value.albumName}</p>
+                <label>Tags:</label>
+                <p>{value.tags}</p>
+                <label>Year:</label>
+                <p>{value.year}</p>
+                <label>Description:</label>
+                <p>{value.description}</p>
+                <button>Update Song Info</button>
+                {/* link to song info update page? */}
+              </div>
+            );
+          })}
       </div>
     </div>
   );
