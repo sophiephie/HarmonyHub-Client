@@ -30,7 +30,7 @@ const NavBar = () => {
     try {
       // Send the token to the server for verification
       const response = await axios.post(
-        "http://localhost:3001/api/users/google-login",
+        "http://localhost:3001/users/google-login",
         {
           googleToken: credentialResponse.credential,
           clientId: credentialResponse.clientId,

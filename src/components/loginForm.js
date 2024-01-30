@@ -9,7 +9,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     try {
       // Send email and password to the server for verification
       const response = await axios.post(
-        "http://localhost:3001/api/users/email-login",
+        "http://localhost:3001/users/email-login",
         {
           email,
           password,
