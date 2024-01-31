@@ -1,21 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 
-const SongList = () => {
-  const [songs, setSongs] = useState([]);
-
-  useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/songs");
-        setSongs(response.data.songs);
-      } catch (error) {
-        console.error("Error fetching songs:", error);
-      }
-    };
-
-    fetchSongs();
-  }, []);
+const SongList = ({songs}) => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -57,7 +42,7 @@ const SongList = () => {
                 href={`/songs/${song.songId}`}
                 className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                Read more
+                Listen
                 <svg
                   className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                   aria-hidden="true"
