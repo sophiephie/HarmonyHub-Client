@@ -7,6 +7,7 @@ import SignUpPage from "../pages/signup";
 import Dashboard from "../pages/userDash";
 import EmailLoginForm from "./loginForm";
 import axios from "axios";
+import AddSong from "../pages/addsong";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -102,9 +103,16 @@ const NavBar = () => {
                 <div className="text-white ml-20">
                   <Link to="/">Genre</Link>
                 </div>
-                <div className="text-white ml-20">
-                  <Link to="/dashboard">Dashboard</Link>
-                </div>
+                {isLoggedIn && (
+                  <div className="text-white ml-20">
+                    <Link to="/dashboard">Dashboard</Link>
+                  </div>
+                )}
+                {isLoggedIn && (
+                  <div className="text-white ml-20">
+                    <Link to="/addsong">Add a Song</Link>
+                  </div>
+                )}
               </div>
               {/* Show log out button if the user is logged in, otherwise show login button */}
               <div className="w-150">
@@ -157,6 +165,7 @@ const NavBar = () => {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/addsong" element={<AddSong />} />
       </Routes>
     </div>
   );

@@ -56,15 +56,16 @@ function Dashboard() {
       });
   };
 
-  const changePass = () => {
+  const changePass = (data) => {
     axios
-      .put("http://localhost:3001/users/dashboard/changepassword", {
+      .put("http://localhost:3001/users/dashboard/changePassword", data, {
         headers: { jwtToken: localStorage.getItem("jwtToken") },
       })
       .then((response) => {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
+          setShowPassChange(false);
         }
       });
   };
@@ -120,20 +121,30 @@ function Dashboard() {
                     validationSchema={infoValidation}
                   >
                     <Form>
-                      <label>Display Name:</label>
-                      <ErrorMessage name="displayName" component="span" />
-                      <Field
-                        name="displayName"
-                        placeholder={value.displayName}
-                      />
-                      <label>Email:</label>
-                      <ErrorMessage name="email" component="span" />
-                      <Field name="email" placeholder={value.email} />
-                      <label>Enter password:</label>
-                      <ErrorMessage name="password" component="span" />
-                      <Field name="password" type="password" />
-                      <button type="submit">Update</button>
-                      <button onClick={toggleUpdateForm}>Cancel</button>
+                      <div className="inner">
+                        <label>Display Name:</label>
+                        <ErrorMessage name="displayName" component="span" />
+                        <Field
+                          name="displayName"
+                          placeholder={value.displayName}
+                        />
+                      </div>
+                      <div className="inner">
+                        <label>Email:</label>
+                        <ErrorMessage name="email" component="span" />
+                        <Field name="email" placeholder={value.email} />
+                      </div>
+                      <div className="inner">
+                        <label>Enter password:</label>
+                        <ErrorMessage name="password" component="span" />
+                        <Field name="password" type="password" />
+                      </div>
+                      <div className="inner">
+                        <button type="submit">Update</button>
+                      </div>
+                      <div className="inner">
+                        <button onClick={toggleUpdateForm}>Cancel</button>
+                      </div>
                     </Form>
                   </Formik>
                 </div>
@@ -154,16 +165,22 @@ function Dashboard() {
                         validationSchema={passValiation}
                       >
                         <Form>
-                          <label>Old password:</label>
-                          <ErrorMessage name="oldPass" component="span" />
-                          <Field name="oldPass" type="password" />
-                          <label>New password:</label>
-                          <ErrorMessage name="newPass" component="span" />
-                          <Field name="newPass" type="password" />
-                          <button onClick={togglePassChange} type="submit">
-                            Change Password
-                          </button>
-                          <button onClick={togglePassChange}>Cancel</button>
+                          <div className="inner">
+                            <label>Old password:</label>
+                            <ErrorMessage name="oldPass" component="span" />
+                            <Field name="oldPass" type="password" />
+                          </div>
+                          <div className="inner">
+                            <label>New password:</label>
+                            <ErrorMessage name="newPass" component="span" />
+                            <Field name="newPass" type="password" />
+                          </div>
+                          <div className="inner">
+                            <button type="submit">Change Password</button>
+                          </div>
+                          <div className="inner">
+                            <button onClick={togglePassChange}>Cancel</button>
+                          </div>
                         </Form>
                       </Formik>
                     </div>
@@ -186,12 +203,12 @@ function Dashboard() {
                 <p>{value.songTitle}</p>
                 <label>Song Data</label>
                 {/* button to change? */}
-                <label>Artowrk</label>
+                <label>Artwork</label>
                 {/* display image and button to change? */}
                 <label>Artist: </label>
                 <p>{value.artistName}</p>
                 <label>Album:</label>
-                <p>{value.albumName}</p>
+                <p>{value.albumTitle}</p>
                 <label>Tags:</label>
                 <p>{value.tags}</p>
                 <label>Year:</label>
