@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
@@ -29,7 +29,16 @@ function AddSong() {
   const [song, setSong] = useState(null);
   const [art, setArt] = useState(null);
 
-  const addSong = (data) => {
+  const axiosInstance = axios.create({
+    headers: {
+      "Content-Type": "multipart/form-data",
+      jwtToken: localStorage.getItem("jwtToken"),
+    },
+    maxContentLength: Infinity,
+    maxBodyLenghth: Infinity,
+  });
+
+  const addSong = async (data) => {
     if (!song) {
       console.log("missing song file");
       return;
@@ -45,19 +54,20 @@ function AddSong() {
       fd.append("art", art);
     }
 
-    console.log(fd);
-
-    axios
-      .post("http://localhost:3001/songs/post", fd, {
-        headers: { jwtToken: localStorage.getItem("jwtToken") },
-      })
-      .then((response) => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
-          //idk?
-        }
-      });
+    try {
+      const response = await axiosInstance.post(
+        "http://localhost:3001/songs/post",
+        fd
+      );
+      if (response.data.error) {
+        console.log(response.data.error);
+      } else {
+        console.log("success?");
+      }
+    } catch (error) {
+      console.log("something went wrong");
+      console.log(error);
+    }
   };
 
   return (
@@ -110,7 +120,7 @@ function AddSong() {
             <div className="inner">
               <label>Description</label>
               <ErrorMessage name="description" component="span" />
-              <Field name="decription" as="textarea" />
+              <Field name="description" as="textarea" />
             </div>
             <div className="inner">
               <button type="submit">Add Song</button>
