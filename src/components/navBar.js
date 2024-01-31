@@ -18,7 +18,7 @@ const NavBar = () => {
     // Check if a valid JWT token is present in local storage and set if user is logged in
     const jwtToken = localStorage.getItem("jwtToken");
 
-    if (jwtToken !== "undefined" && jwtToken) {
+    if (jwtToken !== "undefined") {
       setIsLoggedIn(!!jwtToken);
     }
   }, []);

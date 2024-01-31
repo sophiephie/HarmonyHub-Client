@@ -3,8 +3,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
   const [songList, setSongList] = useState({});
   const [showPassChange, setShowPassChange] = useState(false);
@@ -14,6 +16,10 @@ function Dashboard() {
   const [updateForm, setUpdateForm] = useState(false);
   const toggleUpdateForm = () => {
     setUpdateForm(!updateForm);
+  };
+  const [showDelete, setShowDelete] = useState(false);
+  const toggleDeleteForm = () => {
+    setShowDelete(!showDelete);
   };
 
   const passValues = {
@@ -26,6 +32,13 @@ function Dashboard() {
     email: "",
     password: "",
   };
+
+  const deleteValue = {
+    password: "",
+  };
+  const deleteValid = Yup.object().shape({
+    password: Yup.string().required(),
+  });
 
   const passValiation = Yup.object().shape({
     oldPass: Yup.string(),
@@ -52,6 +65,7 @@ function Dashboard() {
           console.log(response.data.error);
         } else {
           setUpdateForm(false);
+          navigate("/dashboard");
         }
       });
   };
@@ -66,6 +80,25 @@ function Dashboard() {
           console.log(response.data.error);
         } else {
           setShowPassChange(false);
+          navigate("/dashboard");
+        }
+      });
+  };
+
+  const deleteUser = (data) => {
+    axios
+      .delete("http://localhost:3001/users/dashboard/delete", {
+        data,
+        headers: { jwtToken: localStorage.getItem("jwtToken") },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          localStorage.removeItem("jwtToken");
+          localStorage.removeItem("displayName");
+          localStorage.removeItem("email");
+          navigate("/");
         }
       });
   };
@@ -192,6 +225,34 @@ function Dashboard() {
             </div>
           );
         })}
+
+        {showDelete ? (
+          <div className="delete">
+            <Formik
+              initialValues={deleteValue}
+              onSubmit={deleteUser}
+              validationSchema={deleteValid}
+            >
+              <Form>
+                <div className="inner">
+                  <label>Enter Password:</label>
+                  <ErrorMessage name="password" component="span" />
+                  <Field name="password" type="password" />
+                </div>
+                <div className="inner">
+                  <button type="submit">Delete Account</button>
+                </div>
+                <div className="inner">
+                  <button onClick={toggleDeleteForm}>Cancel</button>
+                </div>
+              </Form>
+            </Formik>
+          </div>
+        ) : (
+          <div className="delete">
+            <button onClick={toggleDeleteForm}>Delete Account</button>
+          </div>
+        )}
       </div>
       <div className="card">
         <h2>Your Songs</h2>
