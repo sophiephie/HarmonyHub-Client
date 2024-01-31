@@ -11,7 +11,6 @@ function SongsTab() {
         },
         onSubmit: async (values) => {
             try {
-                // const response = await axios.get(`/admin/search?query=${encodeURIComponent(values.searchQuery)}`);
                 const response = await axios.get(`http://localhost:3001/admin/songs/${values.searchQuery}`);
                 setSearchResults(response.data);
                 console.log(response.data);
@@ -51,11 +50,11 @@ function SongsTab() {
                     ))}
                 </div>
             )}
-            {searchResults.length === 0 && (
+            {/* {searchResults.length === 0 && (
                 <div>
                     <p>This User has not uploaded any songs</p>
                 </div>
-            )}
+            )} */}
         </div>
     );
 }
