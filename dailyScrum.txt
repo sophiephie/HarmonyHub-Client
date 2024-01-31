@@ -155,3 +155,29 @@ Jan 30 Benjamin
 3. Need assistance / figure things out
 - Error 500 when trying to query the database
 
+Jan 31 Sophie
+1. Done / not done since last scrum:
+- Done. list of songs on home page
+2. To do until next Scrum:
+- Start song search function
+3. Need assistance / figure things out
+
+Jan 31 Nicholas
+1. Done / not done since last scrum:
+- Done. users management for admin dash
+    - GET / UPDATE / DELETE
+- Done. GET songs for admin dash
+2. To do until next Scrum:
+- Finish song and playlist management for admin dash
+- Implement auth for admin routes and pages
+3. Need assistance / figure things out
+
+Jan 31 Benjamin
+1. Done / Not done since last scrum:
+- Done. Users can update their information
+- Started create song page
+2. To do until next scrum
+- Create delete profile function for users
+3. Need assistance / figure things out
+- Figure out how to pass file from frontend form to backend/S3
+
