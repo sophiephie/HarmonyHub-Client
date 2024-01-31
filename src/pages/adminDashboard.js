@@ -24,7 +24,7 @@ function Dashboard() {
     }
 
     return (
-        <div className="dashboard">
+        <div className="adminDashboard">
             <Sidebar setActiveTab={setActiveTab} />
             <div className="content">{content}</div>
         </div>
