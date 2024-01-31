@@ -22,10 +22,10 @@ function UsersTab() {
         },
     });
     const editFormik = useFormik({
-        initialValues: { username: '', displayName: '', email: '', password: '' },
+        initialValues: { username: '', displayName: '', email: '', id: '' },
         onSubmit: async (values) => {
             try {
-                await axios.post(`/admin/user/${values.username}`, values);
+                await axios.put(`http://localhost:3001/admin/users/${values.id}`, values);
                 // Handle successful edit
                 setEditingUser(null); // Close the edit form
             } catch (error) {
@@ -34,6 +34,15 @@ function UsersTab() {
         },
     });
 
+    const deleteUser = (userId) => {
+        window.confirm("Are you sure you want to delete this user?");
+        try {
+            axios.delete(`http://localhost:3001/admin/users/${userId}`);
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
+    };
+
     const handleEditClick = (user) => {
         setEditingUser(user);
         editFormik.setValues(user);
@@ -41,6 +50,7 @@ function UsersTab() {
     return (
         <div>
             <p>Users management area</p>
+            {/* Search for user by userame */}
             <form onSubmit={formik.handleSubmit}>
                 <input
                     type="text"
@@ -65,10 +75,9 @@ function UsersTab() {
                     ))}
                 </div>
             )}
-
+            {/* Edit User form */}
             {editingUser && (
-                <form onSubmit={editFormik.handleSubmit}>
-                    {/* Edit form fields */}
+                <form class="" onSubmit={editFormik.handleSubmit}>
                     <input
                         type="text"
                         name="username"
@@ -87,6 +96,7 @@ function UsersTab() {
                         value={editFormik.values.email}
                     />
                     <button type="submit">Save</button>
+                    <button onClick={() => deleteUser(editFormik.values.userId)}>Delete User</button>
                 </form>
             )}
         </div>
