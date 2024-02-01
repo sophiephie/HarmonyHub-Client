@@ -181,3 +181,32 @@ Jan 31 Benjamin
 3. Need assistance / figure things out
 - Figure out how to pass file from frontend form to backend/S3
 
+Feb 1 Sophie
+1. Done / not done since last scrum:
+- Done. Search for songs function
+2. To do until next Scrum:
+- Start home page
+3. Need assistance / figure things out
+
+Feb 1 Nicholas
+1. Done / not done since last scrum:
+- Done. UPDATE and DELETE functions fo songs in admin dash
+- Done. Styled admin dash and related components
+- Done. Added visual warning for searches of non-existant songs/users in admin dash
+- Not Done. auth for admin routes
+2. To do until next Scrum:
+- Implement auth for admin routes and pages
+- Update site on web hoster
+3. Need assistance / figure things out
+- New issues with authentication for login, affecting ability to implement admin authorization
+
+Feb 1 Benjamin
+1. Done / Not done since last scrum:
+- Done. User dashboard functions [Users can update account info and delete their accounts]
+- Started upload songs function for users
+- Not Done. Style for user dashboard
+- Not Done. Style for user uploads page
+2. To do until next scrum
+- Finish user upload functions [have songs uploaded to S3]
+3. Need assistance / figure things out
+- Issues with user song uploads not being uploaded to S3
