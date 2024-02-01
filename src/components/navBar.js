@@ -6,8 +6,10 @@ import Home from "../pages/home";
 import SignUpPage from "../pages/signup";
 import Dashboard from "../pages/userDash";
 import EmailLoginForm from "./loginForm";
+import Discover from "../pages/discover";
 import axios from "axios";
 import AddSong from "../pages/addsong";
+import SongPlayer from "../pages/songPlayer";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -88,7 +90,9 @@ const NavBar = () => {
       <nav className="bg-gray-900 p-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center">
-            <img src={Logo} alt="Logo" className="h-8 w-50 mr-2" />
+            <Link to="/">
+              <img src={Logo} alt="Logo" className="h-8 w-50 mr-2" />
+            </Link>
           </div>
 
           <div className="flex-grow justify-start">
@@ -98,7 +102,7 @@ const NavBar = () => {
                   <Link to="/">Home</Link>
                 </div>
                 <div className="text-white ml-20">
-                  <Link to="/">Discover</Link>
+                  <Link to="/discover">Discover</Link>
                 </div>
                 <div className="text-white ml-20">
                   <Link to="/">Genre</Link>
@@ -163,9 +167,11 @@ const NavBar = () => {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/discover" element={<Discover />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/addsong" element={<AddSong />} />
+        <Route path="/songs/:songId" element={<SongPlayer />} />
       </Routes>
     </div>
   );
