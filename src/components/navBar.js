@@ -8,6 +8,7 @@ import Dashboard from "../pages/userDash";
 import EmailLoginForm from "./loginForm";
 import axios from "axios";
 import AddSong from "../pages/addsong";
+import SongPlayer from "../pages/songPlayer";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -166,6 +167,7 @@ const NavBar = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/addsong" element={<AddSong />} />
+        <Route path="/songs/:songId" element={<SongPlayer />} />
       </Routes>
     </div>
   );
