@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 function UsersTab() {
     const [searchResults, setSearchResults] = useState([]);
@@ -9,7 +10,7 @@ function UsersTab() {
 
     async function performSearch(query) {
         try {
-            const response = await axios.get(`http://localhost:3001/admin/users/${query}`);
+            const response = await axios.get(`${siteUrl}/admin/users/${query}`);
             setSearchResults(response.data);
         } catch (error) {
             console.error('Error fetching search results:', error);
@@ -24,7 +25,7 @@ function UsersTab() {
         onSubmit: async (values) => {
             if (!editingUser) { // Only perform search if not in editing mode
                 try {
-                    const response = await axios.get(`http://localhost:3001/admin/users/${values.searchQuery}`);
+                    const response = await axios.get(`${siteUrl}/admin/users/${values.searchQuery}`);
                     // setSearchResults(response.data);
                     if (response.data.error) {
                         setErrorMessage(response.data.error); // Set error message if the response contains an error
@@ -45,7 +46,7 @@ function UsersTab() {
         initialValues: { username: '', displayName: '', email: '', id: '' },
         onSubmit: async (values) => {
             try {
-                await axios.put(`http://localhost:3001/admin/users/${values.id}`, values);
+                await axios.put(`${siteUrl}/admin/users/${values.id}`, values);
                 setEditingUser(null); // Close the edit form and clear editing mode
                 performSearch(formik.values.searchQuery); // Re-fetch search results to reflect the updated data
             } catch (error) {
@@ -57,7 +58,7 @@ function UsersTab() {
     const deleteUser = async (userId) => {
         if (window.confirm("Are you sure you want to delete this user?")) {
             try {
-                await axios.delete(`http://localhost:3001/admin/users/${userId}`);
+                await axios.delete(`${siteUrl}/admin/users/${userId}`);
                 setEditingUser(null);
                 performSearch(formik.values.searchQuery); // Re-fetch search results to update the list after deletion
             } catch (error) {

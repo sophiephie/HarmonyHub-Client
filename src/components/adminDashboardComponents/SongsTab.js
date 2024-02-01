@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 function SongsTab() {
     const [searchResults, setSearchResults] = useState([]);
     const [editingSong, setEditingSong] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
+    // Called after saving an edit or deleting a song
     async function performSearch(query) {
         try {
-            const response = await axios.get(`http://localhost:3001/admin/songs/${query}`);
+            const response = await axios.get(`${siteUrl}/admin/songs/${query}`);
             if (response.data.error) {
                 setErrorMessage(response.data.error); // Set error message if the response contains an error
                 setSearchResults([]);
@@ -30,7 +32,7 @@ function SongsTab() {
         onSubmit: async (values) => {
             if (!editingSong) {  // Prevent search when editing
                 try {
-                    const response = await axios.get(`http://localhost:3001/admin/songs/${values.searchQuery}`);
+                    const response = await axios.get(`${siteUrl}/admin/songs/${values.searchQuery}`);
                     // setSearchResults(response.data);
                     if (response.data.error) {
                         setErrorMessage(response.data.error); // Set error message if the response contains an error
@@ -51,7 +53,7 @@ function SongsTab() {
         initialValues: { songTitle: '', artistName: '', albumTitle: '', tags: '', year: '', description: '', id: '' },
         onSubmit: async (values) => {
             try {
-                await axios.put(`http://localhost:3001/admin/songs/${values.id}`, values);
+                await axios.put(`${siteUrl}/admin/songs/${values.id}`, values);
                 setEditingSong(null);  // Reset editing mode
                 performSearch(formik.values.searchQuery);  // Re-fetch search results to show updated data
             } catch (error) {
@@ -63,7 +65,7 @@ function SongsTab() {
     const deleteSong = async (songId) => {
         if (window.confirm("Are you sure you want to delete this song?")) {
             try {
-                await axios.delete(`http://localhost:3001/admin/songs/${songId}`);
+                await axios.delete(`${siteUrl}/admin/songs/${songId}`);
                 setEditingSong(null);
                 performSearch(formik.values.searchQuery); // Refresh search results after deletion
             } catch (error) {
