@@ -3,6 +3,13 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 const siteUrl = process.env.REACT_APP_SITE_URL;
 
+const axiosInstance = axios.create({
+    headers: {
+        'Content-Type': 'application/json',
+        jwtToken: localStorage.getItem('jwtToken'),
+    },
+});
+
 function UsersTab() {
     const [searchResults, setSearchResults] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
@@ -10,7 +17,7 @@ function UsersTab() {
 
     async function performSearch(query) {
         try {
-            const response = await axios.get(`${siteUrl}/admin/users/${query}`);
+            const response = await axiosInstance.get(`${siteUrl}/admin/users/${query}`);
             setSearchResults(response.data);
         } catch (error) {
             console.error('Error fetching search results:', error);
@@ -25,8 +32,7 @@ function UsersTab() {
         onSubmit: async (values) => {
             if (!editingUser) { // Only perform search if not in editing mode
                 try {
-                    const response = await axios.get(`${siteUrl}/admin/users/${values.searchQuery}`);
-                    // setSearchResults(response.data);
+                    const response = await axiosInstance.get(`${siteUrl}/admin/users/${values.searchQuery}`);
                     if (response.data.error) {
                         setErrorMessage(response.data.error); // Set error message if the response contains an error
                         setSearchResults([]);
@@ -46,7 +52,7 @@ function UsersTab() {
         initialValues: { username: '', displayName: '', email: '', id: '' },
         onSubmit: async (values) => {
             try {
-                await axios.put(`${siteUrl}/admin/users/${values.id}`, values);
+                await axiosInstance.put(`${siteUrl}/admin/users/${values.id}`, values);
                 setEditingUser(null); // Close the edit form and clear editing mode
                 performSearch(formik.values.searchQuery); // Re-fetch search results to reflect the updated data
             } catch (error) {
@@ -58,7 +64,7 @@ function UsersTab() {
     const deleteUser = async (userId) => {
         if (window.confirm("Are you sure you want to delete this user?")) {
             try {
-                await axios.delete(`${siteUrl}/admin/users/${userId}`);
+                await axiosInstance.delete(`${siteUrl}/admin/users/${userId}`);
                 setEditingUser(null);
                 performSearch(formik.values.searchQuery); // Re-fetch search results to update the list after deletion
             } catch (error) {
@@ -133,7 +139,7 @@ function UsersTab() {
                     />
                     <div className="flex justify-between">
                         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">Save</button>
-                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => deleteUser(editFormik.values.id)}>Delete</button>
+                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => deleteUser(editFormik.values.userId)}>Delete</button>
                         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => setEditingUser(null)}>Cancel</button>
                     </div>
                 </form>

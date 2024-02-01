@@ -3,6 +3,13 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 const siteUrl = process.env.REACT_APP_SITE_URL;
 
+const axiosInstance = axios.create({
+    headers: {
+        'Content-Type': 'application/json',
+        jwtToken: localStorage.getItem('jwtToken'),
+    },
+});
+
 function SongsTab() {
     const [searchResults, setSearchResults] = useState([]);
     const [editingSong, setEditingSong] = useState(null);
@@ -11,7 +18,7 @@ function SongsTab() {
     // Called after saving an edit or deleting a song
     async function performSearch(query) {
         try {
-            const response = await axios.get(`${siteUrl}/admin/songs/${query}`);
+            const response = await axiosInstance.get(`${siteUrl}/admin/songs/${query}`);
             if (response.data.error) {
                 setErrorMessage(response.data.error); // Set error message if the response contains an error
                 setSearchResults([]);
@@ -32,7 +39,7 @@ function SongsTab() {
         onSubmit: async (values) => {
             if (!editingSong) {  // Prevent search when editing
                 try {
-                    const response = await axios.get(`${siteUrl}/admin/songs/${values.searchQuery}`);
+                    const response = await axiosInstance.get(`${siteUrl}/admin/songs/${values.searchQuery}`);
                     // setSearchResults(response.data);
                     if (response.data.error) {
                         setErrorMessage(response.data.error); // Set error message if the response contains an error
@@ -53,7 +60,7 @@ function SongsTab() {
         initialValues: { songTitle: '', artistName: '', albumTitle: '', tags: '', year: '', description: '', id: '' },
         onSubmit: async (values) => {
             try {
-                await axios.put(`${siteUrl}/admin/songs/${values.id}`, values);
+                await axiosInstance.put(`${siteUrl}/admin/songs/${values.id}`, values);
                 setEditingSong(null);  // Reset editing mode
                 performSearch(formik.values.searchQuery);  // Re-fetch search results to show updated data
             } catch (error) {
@@ -65,7 +72,7 @@ function SongsTab() {
     const deleteSong = async (songId) => {
         if (window.confirm("Are you sure you want to delete this song?")) {
             try {
-                await axios.delete(`${siteUrl}/admin/songs/${songId}`);
+                await axiosInstance.delete(`${siteUrl}/admin/songs/${songId}`);
                 setEditingSong(null);
                 performSearch(formik.values.searchQuery); // Refresh search results after deletion
             } catch (error) {
@@ -166,12 +173,12 @@ function SongsTab() {
                     />
                     <div className="flex justify-between">
                         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">Save</button>
-                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => deleteSong(editFormik.values.id)}>Delete</button>
+                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => deleteSong(editFormik.values.songId)}>Delete</button>
                         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => setEditingSong(null)}>Cancel</button>
                     </div>
                 </form>
             )}
-            {errorMessage && ( // Step 3: Conditionally render the error message
+            {errorMessage && ( // Conditionally render the error message
                 <div className="text-red-500">{errorMessage}</div>
             )}
         </div>
