@@ -10,6 +10,7 @@ function AddSong() {
     // songURL: [],
     // artworkURL: [],
     artistName: "",
+    albumTitle: "",
     tags: "",
     year: "",
     description: "",
@@ -45,14 +46,15 @@ function AddSong() {
     }
     const fd = new FormData();
     fd.append("song", song);
-    fd.append("songTitle", data.songTitle);
-    fd.append("artistName", data.artistName);
-    fd.append("tags", data.tags);
-    fd.append("year", data.year);
-    fd.append("description", data.description);
     if (art) {
       fd.append("art", art);
     }
+    fd.append("songTitle", data.songTitle);
+    fd.append("artistName", data.artistName);
+    fd.append("albumTitle", data.albumTitle);
+    fd.append("tags", data.tags);
+    fd.append("year", data.year);
+    fd.append("description", data.description);
 
     try {
       const response = await axiosInstance.post(
@@ -106,6 +108,11 @@ function AddSong() {
               <label>Artist Name</label>
               <ErrorMessage name="artistName" component="span" />
               <Field name="artistName" />
+            </div>
+            <div className="inner">
+              <label>Album Title</label>
+              <ErrorMessage name="albumTitle" component="span" />
+              <Field name="albumTitle" />
             </div>
             <div className="inner">
               <label>Tags & Genres</label>
