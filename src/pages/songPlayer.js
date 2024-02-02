@@ -7,23 +7,43 @@ function SongPlayer() {
   const { songId } = useParams();
   const [songData, setSongData] = useState([]);
   const [url, setUrl] = useState({});
+  const [art, setArt] = useState("");
 
   useEffect(() => {
-    const fetchSong = async () => {
+    const fetchData = async () => {
       try {
+        //get song info
+        const response = await axios.get(
+          `http://localhost:3001/songs/infoById/${songId}`
+        );
+        setSongData(response.data);
+
+        if (response.data.artworkURL) {
+          //if artwork exist get artwork
+          fetch(`http://localhost:3001/songs/artById/${songId}`)
+            .then((response) => response.blob())
+            .then((blob) => {
+              // Convert the blob to a data URL
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                setArt(reader.result);
+              };
+              reader.readAsDataURL(blob);
+            });
+        }
+
         const blob = await fetch(
-          `http://localhost:3001/songs/byId/${songId}`
+          //get song
+          `http://localhost:3001/songs/songFileById/${songId}`
         ).then((response) => response.blob());
-
-        console.log(blob);
-
         const url = URL.createObjectURL(blob);
         setUrl(url);
       } catch (error) {
         console.error("Error fetching songs:", error);
       }
     };
-    fetchSong();
+
+    fetchData();
   }, [songId]);
 
   const audioURL = url;
@@ -35,7 +55,7 @@ function SongPlayer() {
           <img
             className="rounded-t-lg w-full"
             src={
-              value.artworkURL ||
+              art ||
               "https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=100"
             }
             alt={value.songTitle}
