@@ -6,22 +6,27 @@ import axios from "axios";
 function SongPlayer() {
   const { songId } = useParams();
   const [songData, setSongData] = useState([]);
+  const [url, setUrl] = useState({});
 
   useEffect(() => {
     const fetchSong = async () => {
       try {
-        const response = await axios.get(
+        const blob = await fetch(
           `http://localhost:3001/songs/byId/${songId}`
-        );
-        setSongData(response.data);
+        ).then((response) => response.blob());
+
+        console.log(blob);
+
+        const url = URL.createObjectURL(blob);
+        setUrl(url);
       } catch (error) {
         console.error("Error fetching songs:", error);
       }
     };
-
     fetchSong();
   }, [songId]);
-  const audioURL = "/BaconPancake.mp3"; // test url replace with fetched url from database
+
+  const audioURL = url;
   return (
     <div className="card">
       {[songData].map((value, key) => (
