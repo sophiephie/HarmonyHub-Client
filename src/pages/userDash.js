@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -101,6 +102,18 @@ function Dashboard() {
           navigate("/");
         }
       });
+  };
+
+  const deleteSong = async (songId) => {
+    if (window.confirm("Are you sure you want to delete this song?")) {
+      try {
+        await axios.delete(`${siteUrl}/songs/byId/${songId}`, {
+          headers: { jwtToken: localStorage.getItem("jwtToken") },
+        });
+      } catch (error) {
+        console.error('Error deleting song:', error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -257,7 +270,7 @@ function Dashboard() {
       <div className="card">
         <h2>Your Songs</h2>
         {songList.length > 0 &&
-          [songList].map((value, key) => {
+          songList.map((value) => {
             return (
               <div>
                 <label>Title:</label>
@@ -266,6 +279,7 @@ function Dashboard() {
                 {/* button to change? */}
                 <label>Artwork</label>
                 {/* display image and button to change? */}
+                <br />
                 <label>Artist: </label>
                 <p>{value.artistName}</p>
                 <label>Album:</label>
@@ -277,6 +291,7 @@ function Dashboard() {
                 <label>Description:</label>
                 <p>{value.description}</p>
                 <button>Update Song Info</button>
+                <button type="button" onClick={() => deleteSong(value.songId)}>Delete Song</button>
                 {/* link to song info update page? */}
               </div>
             );
