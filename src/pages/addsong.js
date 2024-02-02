@@ -3,8 +3,10 @@ import axios from "axios";
 import { useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useNavigate } from "react-router-dom";
 
 function AddSong() {
+  const navigate = useNavigate();
   const initialValues = {
     songTitle: "",
     songURL: [],
@@ -75,7 +77,7 @@ function AddSong() {
       if (response.data.error) {
         console.log(response.data.error);
       } else {
-        console.log("success?");
+        navigate("/");
       }
     } catch (error) {
       console.log("something went wrong");
@@ -157,7 +159,7 @@ function AddSong() {
               <ErrorMessage name="description" component="span" />
               <Field name="description" as="textarea" />
             </div>
-            <div className="inner">
+            <div className="innerEnd">
               <button type="submit">Add Song</button>
             </div>
           </Form>

@@ -53,7 +53,7 @@ function SongPlayer() {
         <div>
           <h1>{value.songTitle}</h1>
           <img
-            className="rounded-t-lg w-full"
+            className="rounded-t-lg w-full max-w-[600px] max-h-[300px]"
             src={
               art ||
               "https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=100"
@@ -65,10 +65,12 @@ function SongPlayer() {
             {value.artistName}
           </p>
           <p className="mb-3 ml-6 font-normal text-left text-gray-500">
-            {value.albumtitle}
+            {value.albumTitle}
           </p>
           <div className="flex justify-between items-center text-left text-gray-500 ml-6">
-            <span className="text-white">{value.year}</span>
+            <span className="text-white">
+              {value.year === "0000-00-00" ? "" : value.year}
+            </span>
           </div>
           <div className="mt-2 ml-6">
             <p className="text-left text-white">{value.description}</p>
