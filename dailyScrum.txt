@@ -210,3 +210,35 @@ Feb 1 Benjamin
 - Finish user upload functions [have songs uploaded to S3]
 3. Need assistance / figure things out
 - Issues with user song uploads not being uploaded to S3
+
+Feb 2 Sophie
+1. Done / not done since last scrum:
+- Done. Search function
+- Done. Home page
+- Not Done. Fixing Trello board cards
+2. To do until next Scrum:
+- Fix bugs in registration
+- Implement a user page, that can be visited by others users
+3. Need assistance / figure things out
+
+Feb 2 Nicholas
+1. Done / not done since last scrum:
+- Implemented auth for admin routes
+- Done. Admin token validation
+- Updated sites repos and fixed pathing and ports
+2. To do until next Scrum:
+- Implement song deletion for users, including deleting song from S3
+- Continuing porting repo to site and fixing associated bugs
+3. Need assistance / figure things out
+
+Feb 2 Benjamin
+1. Done / Not done since last scrum:
+- Done. Files are uploaded to S3
+- Started media player for song playback
+- Not Done. Getting files from S3
+2. To do until next scrum
+- Finish media player
+- Finish implementing get from S3 for song playback
+3. Need assistance / figure things out
+- Issues with file from S3 being passed from backend to frontend
+
