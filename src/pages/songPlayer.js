@@ -20,7 +20,7 @@ function SongPlayer() {
 
         if (response.data.artworkURL) {
           //if artwork exist get artwork
-          fetch(`http://localhost:3001/songs/artById/${songId}`)
+          await fetch(`http://localhost:3001/songs/artById/${songId}`)
             .then((response) => response.blob())
             .then((blob) => {
               // Convert the blob to a data URL
