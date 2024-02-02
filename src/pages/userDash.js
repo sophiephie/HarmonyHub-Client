@@ -13,14 +13,20 @@ function Dashboard() {
   const [showPassChange, setShowPassChange] = useState(false);
   const togglePassChange = () => {
     setShowPassChange(!showPassChange);
+    setUpdateForm(false);
+    setShowDelete(false);
   };
   const [updateForm, setUpdateForm] = useState(false);
   const toggleUpdateForm = () => {
     setUpdateForm(!updateForm);
+    setShowPassChange(false);
+    setShowDelete(false);
   };
   const [showDelete, setShowDelete] = useState(false);
   const toggleDeleteForm = () => {
     setShowDelete(!showDelete);
+    setShowPassChange(false);
+    setUpdateForm(false);
   };
 
   const passValues = {
@@ -185,10 +191,8 @@ function Dashboard() {
                         <ErrorMessage name="password" component="span" />
                         <Field name="password" type="password" />
                       </div>
-                      <div className="inner">
+                      <div className="innerEnd">
                         <button type="submit">Update</button>
-                      </div>
-                      <div className="inner">
                         <button onClick={toggleUpdateForm}>Cancel</button>
                       </div>
                     </Form>
@@ -196,13 +200,21 @@ function Dashboard() {
                 </div>
               ) : (
                 <div>
-                  <label>Username:</label>
-                  <p>{value.username}</p>
-                  <label>Displayname: </label>
-                  <p>{value.displayName}</p>
-                  <label>Email:</label>
-                  <p>{value.email}</p>
-                  <button onClick={toggleUpdateForm}>Update</button>
+                  <div className="inner">
+                    <label>Username:</label>
+                    <p>{value.username}</p>
+                  </div>
+                  <div className="inner">
+                    <label>Displayname: </label>
+                    <p>{value.displayName}</p>
+                  </div>
+                  <div className="inner">
+                    <label>Email:</label>
+                    <p>{value.email}</p>
+                  </div>
+                  <div className="innerEnd">
+                    <button onClick={toggleUpdateForm}>Update Info</button>
+                  </div>
                   {showPassChange ? (
                     <div>
                       <Formik
@@ -221,17 +233,19 @@ function Dashboard() {
                             <ErrorMessage name="newPass" component="span" />
                             <Field name="newPass" type="password" />
                           </div>
-                          <div className="inner">
+                          <div className="innerEnd">
                             <button type="submit">Change Password</button>
-                          </div>
-                          <div className="inner">
                             <button onClick={togglePassChange}>Cancel</button>
                           </div>
                         </Form>
                       </Formik>
                     </div>
                   ) : (
-                    <button onClick={togglePassChange}>Change Password</button>
+                    <div className="innerEnd">
+                      <button onClick={togglePassChange}>
+                        Change Password
+                      </button>
+                    </div>
                   )}
                 </div>
               )}
@@ -254,8 +268,6 @@ function Dashboard() {
                 </div>
                 <div className="inner">
                   <button type="submit">Delete Account</button>
-                </div>
-                <div className="inner">
                   <button onClick={toggleDeleteForm}>Cancel</button>
                 </div>
               </Form>

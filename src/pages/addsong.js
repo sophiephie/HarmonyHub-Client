@@ -3,12 +3,14 @@ import axios from "axios";
 import { useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useNavigate } from "react-router-dom";
 
 function AddSong() {
+  const navigate = useNavigate();
   const initialValues = {
     songTitle: "",
-    // songURL: [],
-    // artworkURL: [],
+    songURL: [],
+    artworkURL: [],
     artistName: "",
     albumTitle: "",
     tags: "",
@@ -17,9 +19,20 @@ function AddSong() {
   };
 
   const validationSchema = Yup.object().shape({
-    songTitle: Yup.string().min(1).max(50).required(),
-    // songURL: Yup.array().min(1).max(1),
-    // artworkURL: Yup.array().max(1),
+    songTitle: Yup.string()
+      .min(1)
+      .max(50)
+      .required("Please enter a Song title"),
+    songURL: Yup.mixed()
+      .required()
+      .test("FILE_Type", "Please only upload Mp3s", (value) => {
+        if (value) {
+          return value.type !== "audio/mp3" || value.type !== "audio/mpeg";
+        } else {
+          return true;
+        }
+      }),
+    artworkURL: Yup.array().max(1),
     artistName: Yup.string().max(45),
     albumTitle: Yup.string().max(45),
     tags: Yup.string().max(255),
@@ -64,7 +77,7 @@ function AddSong() {
       if (response.data.error) {
         console.log(response.data.error);
       } else {
-        console.log("success?");
+        navigate("/");
       }
     } catch (error) {
       console.log("something went wrong");
@@ -88,11 +101,19 @@ function AddSong() {
             </div>
             <div className="inner">
               <label>Song File</label>
+              <ErrorMessage name="songURL" component="span" />
               <input
                 name="songURL"
                 type="file"
                 onChange={(e) => {
-                  setSong(e.target.files[0]);
+                  const file = e.target.files[0];
+                  console.log("file type: ", file.type);
+                  if (file.type === "audio/mp3" || file.type === "audio/mpeg") {
+                    setSong(e.target.files[0]);
+                  } else {
+                    setSong(null);
+                    console.log("Only upload mp3 files");
+                  }
                 }}
               />
             </div>
@@ -101,7 +122,16 @@ function AddSong() {
               <input
                 name="artworkURL"
                 type="file"
-                onChange={(e) => setArt(e.target.files[0])}
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  console.log("file type: ", file.type);
+                  if (file.type === "image/jpeg" || file.type === "image/jpg") {
+                    setArt(e.target.files[0]);
+                  } else {
+                    setArt(null);
+                    console.log("Only upload jpg files");
+                  }
+                }}
               />
             </div>
             <div className="inner">
@@ -129,7 +159,7 @@ function AddSong() {
               <ErrorMessage name="description" component="span" />
               <Field name="description" as="textarea" />
             </div>
-            <div className="inner">
+            <div className="innerEnd">
               <button type="submit">Add Song</button>
             </div>
           </Form>

@@ -7,23 +7,43 @@ function SongPlayer() {
   const { songId } = useParams();
   const [songData, setSongData] = useState([]);
   const [url, setUrl] = useState({});
+  const [art, setArt] = useState("");
 
   useEffect(() => {
-    const fetchSong = async () => {
+    const fetchData = async () => {
       try {
+        //get song info
+        const response = await axios.get(
+          `http://localhost:3001/songs/infoById/${songId}`
+        );
+        setSongData(response.data);
+
+        if (response.data.artworkURL) {
+          //if artwork exist get artwork
+          await fetch(`http://localhost:3001/songs/artById/${songId}`)
+            .then((response) => response.blob())
+            .then((blob) => {
+              // Convert the blob to a data URL
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                setArt(reader.result);
+              };
+              reader.readAsDataURL(blob);
+            });
+        }
+
         const blob = await fetch(
-          `http://localhost:3001/songs/byId/${songId}`
+          //get song
+          `http://localhost:3001/songs/songFileById/${songId}`
         ).then((response) => response.blob());
-
-        console.log(blob);
-
         const url = URL.createObjectURL(blob);
         setUrl(url);
       } catch (error) {
         console.error("Error fetching songs:", error);
       }
     };
-    fetchSong();
+
+    fetchData();
   }, [songId]);
 
   const audioURL = url;
@@ -33,9 +53,9 @@ function SongPlayer() {
         <div>
           <h1>{value.songTitle}</h1>
           <img
-            className="rounded-t-lg w-full"
+            className="rounded-t-lg w-full max-w-[600px] max-h-[300px]"
             src={
-              value.artworkURL ||
+              art ||
               "https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=100"
             }
             alt={value.songTitle}
@@ -45,10 +65,12 @@ function SongPlayer() {
             {value.artistName}
           </p>
           <p className="mb-3 ml-6 font-normal text-left text-gray-500">
-            {value.albumtitle}
+            {value.albumTitle}
           </p>
           <div className="flex justify-between items-center text-left text-gray-500 ml-6">
-            <span className="text-white">{value.year}</span>
+            <span className="text-white">
+              {value.year === "0000-00-00" ? "" : value.year}
+            </span>
           </div>
           <div className="mt-2 ml-6">
             <p className="text-left text-white">{value.description}</p>
