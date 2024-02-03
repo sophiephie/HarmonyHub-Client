@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Sidebar from '../components/adminDashboardComponents/Sidebar';
 import UsersTab from '../components/adminDashboardComponents/UsersTab';
 import SongsTab from '../components/adminDashboardComponents/SongsTab';
-import PlaylistsTab from '../components/adminDashboardComponents/PlaylistsTab';
 import '../App.css';
 
 function Dashboard() {
@@ -15,9 +14,6 @@ function Dashboard() {
             break;
         case 'songs':
             content = <SongsTab />;
-            break;
-        case 'playlists':
-            content = <PlaylistsTab />;
             break;
         default:
             content = <div>Select a tab</div>;

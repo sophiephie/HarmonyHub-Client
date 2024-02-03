@@ -85,7 +85,7 @@ function UsersTab() {
                 <>
                     <form onSubmit={formik.handleSubmit} className="mb-4">
                         <input
-                            className="border rounded py-2 px-3 mr-2 w-full md:w-auto"
+                            className="border rounded py-2 px-3 mr-2 w-full md:w-auto text-white"
                             type="text"
                             name="searchQuery"
                             onChange={formik.handleChange}
@@ -112,7 +112,7 @@ function UsersTab() {
                 </>
             )}
             {editingUser && (
-                <form onSubmit={editFormik.handleSubmit} className="space-y-4">
+                <form onSubmit={editFormik.handleSubmit} className="space-y-4 text-white">
                     <input
                         className="border rounded py-2 px-3 w-full"
                         type="text"

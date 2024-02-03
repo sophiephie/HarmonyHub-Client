@@ -5,8 +5,8 @@ function Sidebar({ setActiveTab }) {
         <div className="sidebar">
             <p>Manage</p>
             <button onClick={() => setActiveTab('users')}>Users</button>
+            <br />
             <button onClick={() => setActiveTab('songs')}>Songs</button>
-            <button onClick={() => setActiveTab('playlists')}>Playlists</button>
         </div>
     );
 }
