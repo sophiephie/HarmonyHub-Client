@@ -66,7 +66,7 @@ const SongList = ({ songs }) => {
                 />
               ) : (
                 <div className="h-80 w-full bg-gray-300 flex items-center justify-center">
-                Placeholder Image
+                  Placeholder Image
                 </div>
               )}
             </Link>
@@ -83,7 +83,10 @@ const SongList = ({ songs }) => {
                 {song.albumtitle}
               </p>
               <div className="flex justify-between items-center text-left text-gray-500 ml-6">
-                <span className="text-white">{song.year}</span>
+                <span className="text-white">
+                  {" "}
+                  {song.year !== "0000-00-00" && song.year}
+                </span>
               </div>
               <div className="mt-2 ml-6">
                 <p className="text-left text-white">{song.description}</p>
