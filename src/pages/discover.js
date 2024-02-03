@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SongList from "../components/songList";
 import SearchBar from "../components/searchBar";
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 const Discover = () => {
   const [filteredSongs, setFilteredSongs] = useState([]);
@@ -9,8 +10,8 @@ const Discover = () => {
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/songs");
-        setFilteredSongs(response.data.songs);
+        const response = await axios.get(`${siteUrl}/songs`);
+        setFilteredSongs(response.data.songList);
       } catch (error) {
         console.error("Error fetching songs:", error);
       }
@@ -23,11 +24,11 @@ const Discover = () => {
     // Filter the songs based on the search term
     try {
       const response = await axios.get(
-        `http://localhost:3001/songs/search?keywords=${searchTerm}`
+        `${siteUrl}/songs/search?keywords=${searchTerm}`
       );
       console.log(response);
-      if (response.data.songs && response.data.songs.length > 0) {
-        setFilteredSongs(response.data.songs);
+      if (response.data.songList && response.data.songList.length > 0) {
+        setFilteredSongs(response.data.songList);
       } else {
         setFilteredSongs([]);
       }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MediaPlayer from "../components/MediaPlayer";
 import axios from "axios";
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 function SongPlayer() {
   const { songId } = useParams();
@@ -14,13 +15,13 @@ function SongPlayer() {
       try {
         //get song info
         const response = await axios.get(
-          `http://localhost:3001/songs/infoById/${songId}`
+          `${siteUrl}/songs/infoById/${songId}`
         );
         setSongData(response.data);
 
         if (response.data.artworkURL) {
           //if artwork exist get artwork
-          await fetch(`http://localhost:3001/songs/artById/${songId}`)
+          await fetch(`${siteUrl}/songs/artById/${songId}`)
             .then((response) => response.blob())
             .then((blob) => {
               // Convert the blob to a data URL
@@ -34,7 +35,7 @@ function SongPlayer() {
 
         const blob = await fetch(
           //get song
-          `http://localhost:3001/songs/songFileById/${songId}`
+          `${siteUrl}/songs/songFileById/${songId}`
         ).then((response) => response.blob());
         const url = URL.createObjectURL(blob);
         setUrl(url);

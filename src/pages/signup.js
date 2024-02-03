@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 const SignUpPage = () => {
   const [displayName, setDisplayName] = useState(
@@ -15,7 +16,7 @@ const SignUpPage = () => {
     try {
       // Send the sign-up data to the server
       const response = await axios.post(
-        "http://localhost:3001/users/signup",
+        `${siteUrl}/users/signup`,
         {
           displayName,
           username,

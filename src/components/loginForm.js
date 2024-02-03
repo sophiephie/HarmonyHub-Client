@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 const LoginForm = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     try {
       // Send email and password to the server for verification
       const response = await axios.post(
-        "http://localhost:3001/users/email-login",
+        `${siteUrl}/users/email-login`,
         {
           email,
           password,
@@ -54,20 +55,20 @@ const LoginForm = ({ onLoginSuccess }) => {
   };
 
   return (
-    <form className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-2">
       <input
         type="text"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
+        className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black bg-white"
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
+        className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black bg-white"
       />
       <button
         type="button"
@@ -83,7 +84,7 @@ const LoginForm = ({ onLoginSuccess }) => {
       >
         Create an Account
       </button>
-    </form>
+    </div>
   );
 };
 

@@ -10,6 +10,7 @@ import Discover from "../pages/discover";
 import axios from "axios";
 import AddSong from "../pages/addsong";
 import SongPlayer from "../pages/songPlayer";
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const NavBar = () => {
     try {
       // Send the token to the server for verification
       const response = await axios.post(
-        "http://localhost:3001/users/google-login",
+        `${siteUrl}/users/google-login`,
         {
           googleToken: credentialResponse.credential,
           clientId: credentialResponse.clientId,
@@ -141,7 +142,7 @@ const NavBar = () => {
                   </button>
                 )}
                 {showDropdown && (
-                  <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow-lg">
+                  <div className="z-50 absolute right-0 mt-2 bg-white p-2 rounded shadow-lg">
                     <EmailLoginForm
                       onLoginSuccess={(newUser) => {
                         if (newUser) {
