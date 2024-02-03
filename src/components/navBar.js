@@ -17,6 +17,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setAdmin] = useState();
 
   useEffect(() => {
     // Check if a valid JWT token is present in local storage and set if user is logged in
@@ -24,7 +25,11 @@ const NavBar = () => {
 
     if (jwtToken !== "undefined") {
       setIsLoggedIn(!!jwtToken);
-    }
+    };
+
+    isUserAdmin().then(isAdminStatus => {
+      setAdmin(isAdminStatus); // Use the correct state variable
+    });
   }, []);
 
   const toggleDropdown = () => {
@@ -87,6 +92,25 @@ const NavBar = () => {
     navigate("/");
   };
 
+  const isUserAdmin = async () => {
+    try {
+      const response = await axios.get(`${siteUrl}/admin/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'jwtToken': localStorage.getItem('jwtToken'),
+        },
+      });
+      return response.status === 200;
+    } catch (error) {
+      console.error("Error checking admin status:", error);
+      return false;
+    }
+  };
+
+  const navigateToAdmin = () => {
+    navigate(`/admin`);
+  };
+
   return (
     <div>
       <nav className="bg-gray-900 p-4">
@@ -116,6 +140,15 @@ const NavBar = () => {
                     <Link to="/addsong">Add a Song</Link>
                   </div>
                 )}
+                {isLoggedIn && isAdmin && (
+                  <button
+                    type="button"
+                    onClick={navigateToAdmin}
+                    className="text-white ml-20"
+                  >
+                    Admin
+                  </button>
+                )}
               </div>
               {/* Show log out button if the user is logged in, otherwise show login button */}
               <div className="w-150">
@@ -139,6 +172,7 @@ const NavBar = () => {
                     Login/Create an Account
                   </button>
                 )}
+
                 {showDropdown && (
                   <div className="z-50 absolute mt-2 bg-white p-2 rounded shadow-lg">
                     <EmailLoginForm
