@@ -1,7 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 const SongList = ({ songs }) => {
+  const [artworkUrls, setArtworkUrls] = useState({});
+
+  useEffect(() => {
+    // Fetch artwork URLs for each song
+    const fetchArtworkUrls = async () => {
+      const urls = {};
+      await Promise.all(
+        songs.map(async (song) => {
+          if (song.artworkURL) {
+            try {
+              const response = await fetch(
+                `${siteUrl}/songs/artById/${song.songId}`
+              );
+              if (response.ok) {
+                const blob = await response.blob();
+                const dataUrl = await new Promise((resolve) => {
+                  const reader = new FileReader();
+                  reader.onloadend = () => resolve(reader.result);
+                  reader.readAsDataURL(blob);
+                });
+                urls[song.songId] = dataUrl;
+              } else {
+                // Default image url on fetch error
+                urls[song.songId] =
+                  "https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=100";
+              }
+            } catch (error) {
+              // Default image url on fetch error
+              urls[song.songId] =
+                "https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=100";
+            }
+          } else {
+            // Default image url if artworkURL is not provided
+            urls[song.songId] =
+              "https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=100";
+          }
+        })
+      );
+
+      // Update state after all promises are resolved
+      setArtworkUrls(urls);
+    };
+
+    fetchArtworkUrls();
+  }, [songs]);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto">
       {songs &&
@@ -11,14 +58,17 @@ const SongList = ({ songs }) => {
             className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg dark:bg-gray-800 dark:border-gray-700"
           >
             <Link to={`/songs/${song.songId}`}>
-              <img
-                className="rounded-t-lg w-full"
-                src={
-                  song.artworkURL ||
-                  "https://generative-placeholders.glitch.me/image?width=600&height=300&style=triangles&gap=100"
-                }
-                alt={song.songTitle}
-              />
+              {artworkUrls[song.songId] ? (
+                <img
+                  className="h-80 rounded-t-lg w-full"
+                  src={artworkUrls[song.songId]}
+                  alt={song.songTitle}
+                />
+              ) : (
+                <div className="h-80 w-full bg-gray-300 flex items-center justify-center">
+                Placeholder Image
+                </div>
+              )}
             </Link>
             <div className="p-5">
               <Link to={`/songs/${song.songId}`}>

@@ -26,7 +26,6 @@ const Discover = () => {
       const response = await axios.get(
         `${siteUrl}/songs/search?keywords=${searchTerm}`
       );
-      console.log(response);
       if (response.data.songList && response.data.songList.length > 0) {
         setFilteredSongs(response.data.songList);
       } else {
