@@ -106,9 +106,6 @@ const NavBar = () => {
                 <div className="text-white ml-20">
                   <Link to="/discover">Discover</Link>
                 </div>
-                <div className="text-white ml-20">
-                  <Link to="/">Genre</Link>
-                </div>
                 {isLoggedIn && (
                   <div className="text-white ml-20">
                     <Link to="/dashboard">Dashboard</Link>
