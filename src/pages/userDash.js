@@ -117,7 +117,7 @@ function Dashboard() {
           headers: { jwtToken: localStorage.getItem("jwtToken") },
         });
       } catch (error) {
-        console.error('Error deleting song:', error);
+        console.error("Error deleting song:", error);
       }
     }
   };
@@ -281,33 +281,56 @@ function Dashboard() {
       </div>
       <div className="card">
         <h2>Your Songs</h2>
-        {songList.length > 0 &&
-          songList.map((value) => {
-            return (
-              <div>
-                <label>Title:</label>
-                <p>{value.songTitle}</p>
-                <label>Song Data</label>
-                {/* button to change? */}
-                <label>Artwork</label>
-                {/* display image and button to change? */}
-                <br />
-                <label>Artist: </label>
-                <p>{value.artistName}</p>
-                <label>Album:</label>
-                <p>{value.albumTitle}</p>
-                <label>Tags:</label>
-                <p>{value.tags}</p>
-                <label>Year:</label>
-                <p>{value.year}</p>
-                <label>Description:</label>
-                <p>{value.description}</p>
-                <button>Update Song Info</button>
-                <button type="button" onClick={() => deleteSong(value.songId)}>Delete Song</button>
-                {/* link to song info update page? */}
-              </div>
-            );
-          })}
+        <div className="songcards">
+          {songList.length > 0 &&
+            songList.map((value) => {
+              return (
+                <div>
+                  <div className="inner">
+                    <label>Title:</label>
+                    <p>{value.songTitle}</p>
+                  </div>
+                  <div className="inner">
+                    <label>Song Data</label>
+                    {/* button to change? */}
+                    <label>Artwork</label>
+                    {/* display image and button to change? */}
+                    <br />
+                  </div>
+                  <div className="inner">
+                    <label>Artist: </label>
+                    <p>{value.artistName}</p>
+                  </div>
+                  <div className="inner">
+                    <label>Album:</label>
+                    <p>{value.albumTitle}</p>
+                  </div>
+                  <div className="inner">
+                    <label>Tags:</label>
+                    <p>{value.tags}</p>
+                  </div>
+                  <div className="inner">
+                    <label>Year:</label>
+                    <p>{value.year}</p>
+                  </div>
+                  <div className="inner">
+                    <label>Description:</label>
+                    <p>{value.description}</p>
+                  </div>
+                  <div className="innerEnd">
+                    <button>Update Song Info</button>
+                    <button
+                      type="button"
+                      onClick={() => deleteSong(value.songId)}
+                    >
+                      Delete Song
+                    </button>
+                  </div>
+                  {/* link to song info update page? */}
+                </div>
+              );
+            })}
+        </div>
       </div>
     </div>
   );

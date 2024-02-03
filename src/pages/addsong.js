@@ -9,8 +9,8 @@ function AddSong() {
   const navigate = useNavigate();
   const initialValues = {
     songTitle: "",
-    songURL: [],
-    artworkURL: [],
+    // songURL: [],
+    // artworkURL: [],
     artistName: "",
     albumTitle: "",
     tags: "",
@@ -23,16 +23,16 @@ function AddSong() {
       .min(1)
       .max(50)
       .required("Please enter a Song title"),
-    songURL: Yup.mixed()
-      .required()
-      .test("FILE_Type", "Please only upload Mp3s", (value) => {
-        if (value) {
-          return value.type !== "audio/mp3" || value.type !== "audio/mpeg";
-        } else {
-          return true;
-        }
-      }),
-    artworkURL: Yup.array().max(1),
+    // songURL: Yup.mixed()
+    //   .required()
+    //   .test("FILE_Type", "Please only upload Mp3s", (value) => {
+    //     if (value) {
+    //       return value.type !== "audio/mp3" || value.type !== "audio/mpeg";
+    //     } else {
+    //       return true;
+    //     }
+    //   }),
+    // artworkURL: Yup.array().max(1),
     artistName: Yup.string().max(45),
     albumTitle: Yup.string().max(45),
     tags: Yup.string().max(255),
@@ -42,6 +42,8 @@ function AddSong() {
 
   const [song, setSong] = useState(null);
   const [art, setArt] = useState(null);
+  const [invalidMP3, setInvalidMP3] = useState(false);
+  const [invalidJPG, setInvalidJPG] = useState(false);
 
   const axiosInstance = axios.create({
     headers: {
@@ -77,7 +79,7 @@ function AddSong() {
       if (response.data.error) {
         console.log(response.data.error);
       } else {
-        navigate("/");
+        navigate("/discover");
       }
     } catch (error) {
       console.log("something went wrong");
@@ -96,12 +98,13 @@ function AddSong() {
           <Form>
             <div className="inner">
               <label>Song Title</label>
-              <ErrorMessage name="songTitle" component="span" />
               <Field name="songTitle" />
             </div>
             <div className="inner">
+              <ErrorMessage name="songTitle" component="span" />
+            </div>
+            <div className="inner">
               <label>Song File</label>
-              <ErrorMessage name="songURL" component="span" />
               <input
                 name="songURL"
                 type="file"
@@ -110,15 +113,20 @@ function AddSong() {
                   console.log("file type: ", file.type);
                   if (file.type === "audio/mp3" || file.type === "audio/mpeg") {
                     setSong(e.target.files[0]);
+                    setInvalidMP3(false);
                   } else {
                     setSong(null);
-                    console.log("Only upload mp3 files");
+                    setInvalidMP3(true);
                   }
                 }}
               />
             </div>
             <div className="inner">
+              {invalidMP3 && <span>Invalid file type. Mp3 only.</span>}
+            </div>
+            <div className="inner">
               <label>Artwork</label>
+
               <input
                 name="artworkURL"
                 type="file"
@@ -127,12 +135,20 @@ function AddSong() {
                   console.log("file type: ", file.type);
                   if (file.type === "image/jpeg" || file.type === "image/jpg") {
                     setArt(e.target.files[0]);
+                    setInvalidJPG(false);
                   } else {
                     setArt(null);
-                    console.log("Only upload jpg files");
+                    setInvalidJPG(true);
                   }
                 }}
               />
+            </div>
+            <div className="inner">
+              {invalidJPG && (
+                <span>
+                  Invalid file type. Jpg/Jpeg only. File will not be attached.
+                </span>
+              )}
             </div>
             <div className="inner">
               <label>Artist Name</label>
