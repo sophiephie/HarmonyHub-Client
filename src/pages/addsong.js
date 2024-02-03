@@ -10,8 +10,6 @@ function AddSong() {
   const navigate = useNavigate();
   const initialValues = {
     songTitle: "",
-    // songURL: [],
-    // artworkURL: [],
     artistName: "",
     albumTitle: "",
     tags: "",
@@ -24,16 +22,6 @@ function AddSong() {
       .min(1)
       .max(50)
       .required("Please enter a Song title"),
-    // songURL: Yup.mixed()
-    //   .required()
-    //   .test("FILE_Type", "Please only upload Mp3s", (value) => {
-    //     if (value) {
-    //       return value.type !== "audio/mp3" || value.type !== "audio/mpeg";
-    //     } else {
-    //       return true;
-    //     }
-    //   }),
-    // artworkURL: Yup.array().max(1),
     artistName: Yup.string().max(45),
     albumTitle: Yup.string().max(45),
     tags: Yup.string().max(255),
@@ -73,10 +61,7 @@ function AddSong() {
     fd.append("description", data.description);
 
     try {
-      const response = await axiosInstance.post(
-        `${siteUrl}/songs/post`,
-        fd
-      );
+      const response = await axiosInstance.post(`${siteUrl}/songs/post`, fd);
       if (response.data.error) {
         console.log(response.data.error);
       } else {

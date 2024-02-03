@@ -15,15 +15,12 @@ const SignUpPage = () => {
   const handleSignUp = async () => {
     try {
       // Send the sign-up data to the server
-      const response = await axios.post(
-        `${siteUrl}/users/signup`,
-        {
-          displayName,
-          username,
-          email,
-          password,
-        }
-      );
+      const response = await axios.post(`${siteUrl}/users/signup`, {
+        displayName,
+        username,
+        email,
+        password,
+      });
 
       if (response && response.data) {
         // Store JWT token and display name in local storage
@@ -60,7 +57,7 @@ const SignUpPage = () => {
             name="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
+            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-wheat"
           />
         </div>
         <div className="mb-4">
@@ -76,7 +73,7 @@ const SignUpPage = () => {
             name="displayName"
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
-            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
+            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-wheat"
           />
         </div>
         <div className="mb-4">
@@ -92,7 +89,7 @@ const SignUpPage = () => {
             name="username"
             onChange={(e) => setUsername(e.target.value)}
             value={username}
-            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
+            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-wheat"
           />
         </div>
         <div className="mb-4">
@@ -108,7 +105,7 @@ const SignUpPage = () => {
             name="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black"
+            className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-wheat"
           />
         </div>
         <div className="mt-14 flex items-center justify-between">

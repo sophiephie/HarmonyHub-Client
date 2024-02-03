@@ -14,9 +14,7 @@ function SongPlayer() {
     const fetchData = async () => {
       try {
         //get song info
-        const response = await axios.get(
-          `${siteUrl}/songs/infoById/${songId}`
-        );
+        const response = await axios.get(`${siteUrl}/songs/infoById/${songId}`);
         setSongData(response.data);
 
         if (response.data.artworkURL) {
@@ -70,7 +68,7 @@ function SongPlayer() {
           </p>
           <div className="flex justify-between items-center text-left text-gray-500 ml-6">
             <span className="text-white">
-              {value.year === "0000-00-00" ? "" : value.year}
+              {value.year !== "0000-00-00" && value.year}
             </span>
           </div>
           <div className="mt-2 ml-6">

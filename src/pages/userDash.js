@@ -319,6 +319,7 @@ function Dashboard() {
                   </div>
                   <div className="innerEnd">
                     <button>Update Song Info</button>
+                    {/* link to song info update page? */}
                     <button
                       type="button"
                       onClick={() => deleteSong(value.songId)}
@@ -326,7 +327,6 @@ function Dashboard() {
                       Delete Song
                     </button>
                   </div>
-                  {/* link to song info update page? */}
                 </div>
               );
             })}
