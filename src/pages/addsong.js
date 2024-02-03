@@ -4,6 +4,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 function AddSong() {
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ function AddSong() {
 
     try {
       const response = await axiosInstance.post(
-        "http://localhost:3001/songs/post",
+        `${siteUrl}/songs/post`,
         fd
       );
       if (response.data.error) {

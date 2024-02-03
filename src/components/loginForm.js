@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+const siteUrl = process.env.REACT_APP_SITE_URL;
 
 const LoginForm = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     try {
       // Send email and password to the server for verification
       const response = await axios.post(
-        "http://localhost:3001/users/email-login",
+        `${siteUrl}/users/email-login`,
         {
           email,
           password,

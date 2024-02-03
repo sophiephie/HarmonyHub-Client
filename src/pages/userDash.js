@@ -64,7 +64,7 @@ function Dashboard() {
 
   const updateUser = (data) => {
     axios
-      .put("http://localhost:3001/users/dashboard/update", data, {
+      .put(`${siteUrl}/users/dashboard/update`, data, {
         headers: { jwtToken: localStorage.getItem("jwtToken") },
       })
       .then((response) => {
@@ -79,7 +79,7 @@ function Dashboard() {
 
   const changePass = (data) => {
     axios
-      .put("http://localhost:3001/users/dashboard/changePassword", data, {
+      .put(`${siteUrl}/users/dashboard/changePassword`, data, {
         headers: { jwtToken: localStorage.getItem("jwtToken") },
       })
       .then((response) => {
@@ -94,7 +94,7 @@ function Dashboard() {
 
   const deleteUser = (data) => {
     axios
-      .delete("http://localhost:3001/users/dashboard/delete", {
+      .delete(`${siteUrl}/users/dashboard/delete`, {
         data,
         headers: { jwtToken: localStorage.getItem("jwtToken") },
       })
@@ -126,7 +126,7 @@ function Dashboard() {
     try {
       //GET user info
       axios
-        .get("http://localhost:3001/users/dashboard", {
+        .get(`${siteUrl}/users/dashboard`, {
           headers: { jwtToken: localStorage.getItem("jwtToken") },
         })
         .then((response) => {
@@ -142,7 +142,7 @@ function Dashboard() {
     try {
       //GET song by userId
       axios
-        .get("http://localhost:3001/songs/dashboard", {
+        .get(`${siteUrl}/songs/dashboard`, {
           headers: { jwtToken: localStorage.getItem("jwtToken") },
         })
         .then((response) => {
