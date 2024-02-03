@@ -11,7 +11,7 @@ const Discover = () => {
     const fetchSongs = async () => {
       try {
         const response = await axios.get(`${siteUrl}/songs`);
-        setFilteredSongs(response.data.songs);
+        setFilteredSongs(response.data.songList);
       } catch (error) {
         console.error("Error fetching songs:", error);
       }
@@ -27,8 +27,8 @@ const Discover = () => {
         `${siteUrl}/songs/search?keywords=${searchTerm}`
       );
       console.log(response);
-      if (response.data.songs && response.data.songs.length > 0) {
-        setFilteredSongs(response.data.songs);
+      if (response.data.songList && response.data.songList.length > 0) {
+        setFilteredSongs(response.data.songList);
       } else {
         setFilteredSongs([]);
       }

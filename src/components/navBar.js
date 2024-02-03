@@ -142,7 +142,7 @@ const NavBar = () => {
                   </button>
                 )}
                 {showDropdown && (
-                  <div className="absolute right-0 mt-2 bg-white p-2 rounded shadow-lg">
+                  <div className="z-50 absolute right-0 mt-2 bg-white p-2 rounded shadow-lg">
                     <EmailLoginForm
                       onLoginSuccess={(newUser) => {
                         if (newUser) {

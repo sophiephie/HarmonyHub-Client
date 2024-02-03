@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const SongList = ({ songs }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {songs.map((song) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto">
+      {songs && songs.map((song) => (
         <div
           key={song.songId}
           className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg dark:bg-gray-800 dark:border-gray-700"
