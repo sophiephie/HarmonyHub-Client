@@ -15,19 +15,23 @@ function Dashboard() {
     setShowPassChange(!showPassChange);
     setUpdateForm(false);
     setShowDelete(false);
+    setWrongPass(false);
   };
   const [updateForm, setUpdateForm] = useState(false);
   const toggleUpdateForm = () => {
     setUpdateForm(!updateForm);
     setShowPassChange(false);
     setShowDelete(false);
+    setWrongPass(false);
   };
   const [showDelete, setShowDelete] = useState(false);
   const toggleDeleteForm = () => {
     setShowDelete(!showDelete);
     setShowPassChange(false);
     setUpdateForm(false);
+    setWrongPass(false);
   };
+  const [wrongPass, setWrongPass] = useState(false);
 
   const passValues = {
     oldPass: "",
@@ -70,6 +74,7 @@ function Dashboard() {
       .then((response) => {
         if (response.data.error) {
           console.log(response.data.error);
+          setWrongPass(true);
         } else {
           setUpdateForm(false);
           navigate("/dashboard");
@@ -85,6 +90,7 @@ function Dashboard() {
       .then((response) => {
         if (response.data.error) {
           console.log(response.data.error);
+          setWrongPass(true);
         } else {
           setShowPassChange(false);
           navigate("/dashboard");
@@ -101,6 +107,7 @@ function Dashboard() {
       .then((response) => {
         if (response.data.error) {
           console.log(response.data.error);
+          setWrongPass(true);
         } else {
           localStorage.removeItem("jwtToken");
           localStorage.removeItem("displayName");
@@ -189,6 +196,7 @@ function Dashboard() {
                       <div className="inner">
                         <label>Enter password:</label>
                         <ErrorMessage name="password" component="span" />
+                        {wrongPass && <span>Invalid Password!</span>}
                         <Field name="password" type="password" />
                       </div>
                       <div className="innerEnd">
@@ -226,6 +234,7 @@ function Dashboard() {
                           <div className="inner">
                             <label>Old password:</label>
                             <ErrorMessage name="oldPass" component="span" />
+                            {wrongPass && <span>Invalid Password!</span>}
                             <Field name="oldPass" type="password" />
                           </div>
                           <div className="inner">
@@ -263,6 +272,7 @@ function Dashboard() {
               <Form>
                 <div className="inner">
                   <label>Enter Password:</label>
+                  {wrongPass && <span>Invalid Password!</span>}
                   <ErrorMessage name="password" component="span" />
                   <Field name="password" type="password" />
                 </div>
