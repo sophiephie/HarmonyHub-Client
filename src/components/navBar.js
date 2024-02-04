@@ -30,7 +30,7 @@ const NavBar = () => {
     isUserAdmin().then(isAdminStatus => {
       setAdmin(isAdminStatus); // Use the correct state variable
     });
-  }, []);
+  }, [localStorage.getItem("jwtToken")]);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
