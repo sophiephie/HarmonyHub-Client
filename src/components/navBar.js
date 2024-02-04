@@ -30,7 +30,7 @@ const NavBar = () => {
     isUserAdmin().then(isAdminStatus => {
       setAdmin(isAdminStatus); // Use the correct state variable
     });
-  }, []);
+  }, [localStorage.getItem("jwtToken")]);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -61,11 +61,13 @@ const NavBar = () => {
         localStorage.setItem("displayName", response.data.displayName);
         localStorage.setItem("email", response.data.email);
 
-        setIsLoggedIn(true);
 
         if (newUser) {
           // Redirect to the sign-up page if the user does not exist
           navigate("/signup");
+        } else {
+          setIsLoggedIn(true);
+          navigate(0);
         }
         setShowDropdown(false);
       } else {
