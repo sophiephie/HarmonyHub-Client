@@ -6,7 +6,9 @@ import * as Yup from "yup";
 const siteUrl = process.env.REACT_APP_SITE_URL;
 
 const SignUpPage = () => {
-  const [displayName, setDisplayName] = useState(localStorage.getItem("displayName") || "");
+  const [displayName, setDisplayName] = useState(
+    localStorage.getItem("displayName") || ""
+  );
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
   const [password, setPassword] = useState("");
@@ -15,16 +17,26 @@ const SignUpPage = () => {
 
   // Define Yup validation schema
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email format").required("Email is required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
     displayName: Yup.string().required("Name is required"),
     username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
+        "password needs uppercase, lowercase, and a number"
+      ),
   });
 
   const handleSignUp = async () => {
     try {
       // Validate form using Yup
-      await validationSchema.validate({ email, displayName, username, password }, { abortEarly: false });
+      await validationSchema.validate(
+        { email, displayName, username, password },
+        { abortEarly: false }
+      );
 
       // Send the sign-up data to the server
       const response = await axios.post(`${siteUrl}/users/signup`, {
@@ -72,7 +84,10 @@ const SignUpPage = () => {
           </div>
         )}
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-600"
+          >
             Email
           </label>
           <input
@@ -88,7 +103,10 @@ const SignUpPage = () => {
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="displayName" className="block text-sm font-medium text-gray-600">
+          <label
+            htmlFor="displayName"
+            className="block text-sm font-medium text-gray-600"
+          >
             Name
           </label>
           <input
@@ -100,11 +118,16 @@ const SignUpPage = () => {
             className="mt-1 p-2 w-full border rounded-md placeholder-gray-500 text-black bg-white"
           />
           {errors.displayName && (
-            <div className="text-red-500 text-sm mt-1">{errors.displayName}</div>
+            <div className="text-red-500 text-sm mt-1">
+              {errors.displayName}
+            </div>
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-sm font-medium text-gray-600">
+          <label
+            htmlFor="username"
+            className="block text-sm font-medium text-gray-600"
+          >
             Username
           </label>
           <input
@@ -120,7 +143,10 @@ const SignUpPage = () => {
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-600"
+          >
             Password
           </label>
           <input
