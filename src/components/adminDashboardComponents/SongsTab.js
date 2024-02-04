@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import * as Yup from 'yup';
 const siteUrl = process.env.REACT_APP_SITE_URL;
 
 const axiosInstance = axios.create({
@@ -8,6 +9,18 @@ const axiosInstance = axios.create({
         'Content-Type': 'application/json',
         jwtToken: localStorage.getItem('jwtToken'),
     },
+});
+
+const searchValidationSchema = Yup.object({
+    searchQuery: Yup.string().required('Search query is required'),
+});
+
+const editValidationSchema = Yup.object({
+    songTitle: Yup.string().required('Song title is required'),
+    artistName: Yup.string().required('Artist name is required'),
+    albumTitle: Yup.string(),
+    year: Yup.date(),
+    description: Yup.string(),
 });
 
 function SongsTab() {
@@ -36,6 +49,7 @@ function SongsTab() {
         initialValues: {
             searchQuery: '',
         },
+        validationSchema: searchValidationSchema,
         onSubmit: async (values) => {
             if (!editingSong) {  // Prevent search when editing
                 try {
@@ -58,6 +72,7 @@ function SongsTab() {
 
     const editFormik = useFormik({
         initialValues: { songTitle: '', artistName: '', albumTitle: '', tags: '', year: '', description: '', id: '' },
+        validationSchema: editValidationSchema,
         onSubmit: async (values) => {
             try {
                 await axiosInstance.put(`${siteUrl}/admin/songs/${values.id}`, values);
@@ -97,9 +112,14 @@ function SongsTab() {
                             type="text"
                             name="searchQuery"
                             onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             value={formik.values.searchQuery}
                             placeholder="Search Uploads by Username..."
                         />
+                        {formik.touched.searchQuery && formik.errors.searchQuery && (
+                            <div className="text-red-500">{formik.errors.searchQuery}</div>
+                        )}
+
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
                             Search
                         </button>
@@ -129,17 +149,25 @@ function SongsTab() {
                         type="text"
                         name="songTitle"
                         onChange={editFormik.handleChange}
+                        onBlur={editFormik.handleBlur}
                         value={editFormik.values.songTitle}
                         placeholder="Song Title"
                     />
+                    {editFormik.touched.songTitle && editFormik.errors.songTitle && (
+                        <div className="text-red-500">{editFormik.errors.songTitle}</div>
+                    )}
                     <input
                         className="border rounded py-2 px-3 w-full"
                         type="text"
                         name="artistName"
                         onChange={editFormik.handleChange}
+                        onBlur={editFormik.handleBlur}
                         value={editFormik.values.artistName}
                         placeholder="Artist Name"
                     />
+                    {editFormik.touched.artistName && editFormik.errors.artistName && (
+                        <div className="text-red-500">{editFormik.errors.artistName}</div>
+                    )}
                     <input
                         className="border rounded py-2 px-3 w-full"
                         type="text"
@@ -161,9 +189,13 @@ function SongsTab() {
                         type="text"
                         name="year"
                         onChange={editFormik.handleChange}
+                        onBlur={editFormik.handleBlur}
                         value={editFormik.values.year}
                         placeholder="Year"
                     />
+                    {editFormik.touched.year && editFormik.errors.year && (
+                        <div className="text-red-500">{editFormik.errors.year}</div>
+                    )}
                     <textarea
                         className="border rounded py-2 px-3 w-full"
                         name="description"

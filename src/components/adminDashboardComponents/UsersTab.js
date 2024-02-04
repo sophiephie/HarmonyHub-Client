@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import * as Yup from 'yup';
 const siteUrl = process.env.REACT_APP_SITE_URL;
+
 
 const axiosInstance = axios.create({
     headers: {
         'Content-Type': 'application/json',
         jwtToken: localStorage.getItem('jwtToken'),
     },
+});
+
+const searchValidationSchema = Yup.object({
+    searchQuery: Yup.string().required('Search query is required'),
+});
+
+const editValidationSchema = Yup.object({
+    username: Yup.string().required('Username is required').min(3),
+    displayName: Yup.string().required('Display name is required').min(3),
+    email: Yup.string().email('Invalid email address').required('Email is required'),
 });
 
 function UsersTab() {
@@ -29,6 +41,7 @@ function UsersTab() {
         initialValues: {
             searchQuery: '',
         },
+        validationSchema: searchValidationSchema,
         onSubmit: async (values) => {
             if (!editingUser) { // Only perform search if not in editing mode
                 try {
@@ -50,6 +63,7 @@ function UsersTab() {
 
     const editFormik = useFormik({
         initialValues: { username: '', displayName: '', email: '', id: '' },
+        validationSchema: editValidationSchema,
         onSubmit: async (values) => {
             try {
                 await axiosInstance.put(`${siteUrl}/admin/users/${values.id}`, values);
@@ -89,9 +103,14 @@ function UsersTab() {
                             type="text"
                             name="searchQuery"
                             onChange={formik.handleChange}
+                            // track field touch status
+                            onBlur={formik.handleBlur}
                             value={formik.values.searchQuery}
                             placeholder="Search Users by Username..."
                         />
+                        {formik.touched.searchQuery && formik.errors.searchQuery ? (
+                            <div className="text-red-500">{formik.errors.searchQuery}</div>
+                        ) : null}
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
                             Search
                         </button>
@@ -118,25 +137,37 @@ function UsersTab() {
                         type="text"
                         name="username"
                         onChange={editFormik.handleChange}
+                        onBlur={editFormik.handleBlur}
                         value={editFormik.values.username}
                         placeholder="Username"
                     />
+                    {editFormik.touched.username && editFormik.errors.username ? (
+                        <div className="text-red-500">{editFormik.errors.username}</div>
+                    ) : null}
                     <input
                         className="border rounded py-2 px-3 w-full"
                         type="text"
                         name="displayName"
                         onChange={editFormik.handleChange}
+                        onBlur={editFormik.handleBlur}
                         value={editFormik.values.displayName}
                         placeholder="Display Name"
                     />
+                    {editFormik.touched.displayName && editFormik.errors.displayName ? (
+                        <div className="text-red-500">{editFormik.errors.displayName}</div>
+                    ) : null}
                     <input
                         className="border rounded py-2 px-3 w-full"
                         type="text"
                         name="email"
                         onChange={editFormik.handleChange}
+                        onBlur={editFormik.handleBlur}
                         value={editFormik.values.email}
                         placeholder="Email"
                     />
+                    {editFormik.touched.email && editFormik.errors.email ? (
+                        <div className="text-red-500">{editFormik.errors.email}</div>
+                    ) : null}
                     <div className="flex justify-between">
                         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">Save</button>
                         <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={() => deleteUser(editFormik.values.userId)}>Delete</button>
