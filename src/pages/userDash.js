@@ -328,7 +328,7 @@ function Dashboard() {
                     <p>{value.description}</p>
                   </div>
                   <div className="innerEnd">
-                    <button>Update Song Info</button>
+                    {/* <button>Update Song Info</button>*/}
                     {/* link to song info update page? */}
                     <button
                       type="button"
