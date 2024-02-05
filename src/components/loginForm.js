@@ -28,8 +28,11 @@ const LoginForm = ({ onLoginSuccess }) => {
         setPassword("");
         const error = response.data.error;
         if (error) {
-          alert(error);
+          // Show the warning banner
+          document.getElementById("warningBanner").classList.remove("hidden");
+          document.getElementById("warningBanner").innerText = error;
         } else {
+          document.getElementById("warningBanner").classList.add("hidden");
           const newUser = response.data.newUser;
           if (newUser) {
             // Redirect to the sign-up page if the user does not exist
@@ -56,6 +59,12 @@ const LoginForm = ({ onLoginSuccess }) => {
 
   return (
     <div className="flex flex-col space-y-2">
+      <div
+        id="warningBanner"
+        className="hidden bg-yellow-500 p-4 rounded-md mb-4"
+      >
+        Warning: There was an error during login.
+      </div>
       <input
         type="text"
         placeholder="Email"
