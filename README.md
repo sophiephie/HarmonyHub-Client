@@ -1,70 +1,31 @@
-# Getting Started with Create React App
+Project Description
+HarmonyHub envisions creating an innovative music-sharing platform tailored for users seeking copyright-free music for their projects, eliminating concerns related to copyright restrictions. 
+Our vision is to establish a dynamic music-sharing community where users can effortlessly discover and access a diverse collection of copyright-free music for use in their creative endeavors. Simultaneously, HarmonyHub serves as a powerful platform for artists to share and showcase their work, fostering a supportive environment that caters to both content creators and enthusiasts. With HarmonyHub's intuitive interface, users will experience easy navigation and a seamless onboarding process.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Technologies Used
+•	React for the frontend
+•	Node.js for the backend
+•	MySQL for the database
+•	Github
+•	AWS S3
+ 
+Special Features
+•	User-friendly interface for both artists and listeners
+•	Media player function
+•	Sign-in with Google
+•	Comment and feedback system for community engagement
+•	Sharing and download
+•	Admin panel for user management and content moderation
+•	Music playlist
 
-## Available Scripts
+Additional Libraries
+•	Sequelize
+•	Yup
+•	Formik
+•	Bootstrap for responsive and clean UI
+•	Express.js 
+•	Axios 
 
-In the project directory, you can run:
+<img width="1081" alt="image" src="https://github.com/sophiephie/harmonyhub-client/assets/137083785/953b489d-0a5d-4db9-aaaf-b83240e0a41a">
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
